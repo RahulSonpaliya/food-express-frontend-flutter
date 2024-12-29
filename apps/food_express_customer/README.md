@@ -1,6 +1,6 @@
 # food_express_customer
 
-A new Flutter project.
+Food-Express Customer Flutter App
 
 ## Getting Started
 
