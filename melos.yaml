@@ -2,4 +2,4 @@ name: food_express_frontend
 
 packages:
   - apps/**
-  - packages/**
+  - shared/**
