@@ -13,6 +13,8 @@ dependencies:
   shared_preferences: ^2.3.4
   get_it: ^8.0.3
   stacked_services: ^1.6.0
+  dartz: ^0.10.1
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:

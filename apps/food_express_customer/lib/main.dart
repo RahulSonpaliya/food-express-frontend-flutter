@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shared/app/dialogs.dart';
 import 'package:shared/app/locator.dart';
 import 'package:shared/app_theme.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import 'app/locator.dart';
 import 'views/splash/splash_view.dart';
 
 void main() {
   setupLocator();
+  setupLocatorCustomerApp();
+  setupDialogUi();
   runApp(const MyApp());
 }
 

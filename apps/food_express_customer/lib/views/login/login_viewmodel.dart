@@ -1,4 +1,6 @@
+import 'package:food_express_customer/data/remote/repository.dart';
 import 'package:shared/app/locator.dart';
+import 'package:shared/common_utils.dart';
 import 'package:shared/data/local/app_shared_prefs.dart';
 import 'package:shared/data/local/preference_keys.dart';
 import 'package:stacked/stacked.dart';
@@ -31,21 +33,23 @@ class LogInViewModel extends BaseViewModel {
   }
 
   login() async {
-    // TODO implement
+    showLoading();
+    var result = await locator<Repository>().logIn(
+      requestBody: _getRequestForLogIn(),
+    );
+    hideLoading();
+    result.fold(
+      (failure) {},
+      (response) {},
+    );
   }
 
-  Future<Map<String, String>> _getRequestForLogIn(
-      String selectedCCode, String phoneNumber, String password) async {
+  Map<String, String> _getRequestForLogIn() {
     Map<String, String> request = {};
-    // request['country_code'] = selectedCCode;
-    // request['phone_number'] = phoneNumber;
-    // request['password'] = password;
-    // request['device_id'] = await Repository.get().getFCMToken();
-    // request['device_type'] = getDeviceType();
-    // request['certification_type'] = getCertificationType();
-    // request['version'] = await getVersionName();
-    // request['user_type'] = USER_TYPE;
-    // printMsg("getRequestForLogIn :: $request");
+    request['countryCode'] = selectedCCode;
+    request['phoneNumber'] = mobile;
+    request['password'] = password;
+    request['accountType'] = 'CUSTOMER';
     return request;
   }
 
