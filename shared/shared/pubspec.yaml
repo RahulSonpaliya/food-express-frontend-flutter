@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^2.3.4
+  get_it: ^8.0.3
+  stacked_services: ^1.6.0
 
 dev_dependencies:
   flutter_test:
