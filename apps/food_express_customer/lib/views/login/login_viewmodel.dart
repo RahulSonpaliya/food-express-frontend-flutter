@@ -4,6 +4,8 @@ import 'package:shared/data/local/preference_keys.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../signup/sign_up_view.dart';
+
 class LogInViewModel extends BaseViewModel {
   final _navigationService = locator.get<NavigationService>();
   String mobile = '';
@@ -24,9 +26,8 @@ class LogInViewModel extends BaseViewModel {
   }
 
   navigateToSignUp() {
-    // TODO implement
-    // _navigationService.replaceWithTransition(const SignUpView(),
-    //     transitionStyle: Transition.rightToLeft);
+    _navigationService.replaceWithTransition(SignUpView(),
+        transitionStyle: Transition.rightToLeft);
   }
 
   login() async {
