@@ -3,6 +3,7 @@ import 'package:shared/data/local/app_shared_prefs.dart';
 import 'package:shared/data/local/preference_keys.dart';
 import 'package:stacked/stacked.dart';
 
+import '../login/login_view.dart';
 import '../walkthrough/walkthrough_view.dart';
 
 class SplashViewModel extends BaseViewModel {
@@ -43,10 +44,7 @@ class SplashViewModel extends BaseViewModel {
                   }
                 });
               } else {
-                // TODO
-                //navigate to login screen
-                // Get.offAll(const LogInViewNew(),
-                //     transition: Transition.rightToLeft);
+                Get.offAll(LoginView(), transition: Transition.rightToLeft);
               }
             });
           } else {

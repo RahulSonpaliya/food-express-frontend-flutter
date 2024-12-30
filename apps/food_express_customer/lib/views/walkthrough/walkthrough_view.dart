@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared/app/locator.dart';
 import 'package:shared/colors.dart';
+import 'package:shared/data/local/app_shared_prefs.dart';
+import 'package:shared/data/local/preference_keys.dart';
 import 'package:shared/text_styles.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+import '../login/login_view.dart';
 
 class WalkThoroughView extends StatefulWidget {
   const WalkThoroughView({super.key});
@@ -95,12 +101,7 @@ class _WalkThoroughViewState extends State<WalkThoroughView> {
 
   _skipBtn() {
     return MaterialButton(
-      onPressed: () async {
-        // TODO implement
-        // await AppSharedPrefs.get().addBoolean(PreferenceKeys.FIRST_TIME, false);
-        // _navigationService.replaceWithTransition(const LogInViewNew(),
-        //     transitionStyle: Transition.rightToLeft);
-      },
+      onPressed: _navigateToLogin,
       color: colorWhite,
       elevation: 0,
       height: 50,
@@ -111,14 +112,15 @@ class _WalkThoroughViewState extends State<WalkThoroughView> {
     );
   }
 
+  _navigateToLogin() async {
+    await AppSharedPrefs.get().addBoolean(PreferenceKeys.FIRST_TIME, false);
+    locator.get<NavigationService>().replaceWithTransition(LoginView(),
+        transitionStyle: Transition.rightToLeft);
+  }
+
   _getStartedBtn() {
     return MaterialButton(
-      onPressed: () async {
-        // TODO implement
-        // await AppSharedPrefs.get().addBoolean(PreferenceKeys.FIRST_TIME, false);
-        // _navigationService.replaceWithTransition(const LogInViewNew(),
-        //     transitionStyle: Transition.rightToLeft);
-      },
+      onPressed: _navigateToLogin,
       color: theme_blue_color_1,
       height: 50,
       child: Row(

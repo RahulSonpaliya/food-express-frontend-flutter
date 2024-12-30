@@ -37,6 +37,7 @@ dependencies:
   stacked: ^3.4.4
   get: ^4.6.6
   stacked_services: ^1.6.0
+  keyboard_actions: ^4.2.0
   shared:
     path: ../../shared/shared
 

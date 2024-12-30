@@ -8,11 +8,17 @@ class AppTheme {
     style: ElevatedButton.styleFrom(
       backgroundColor: theme_blue_color_1,
       foregroundColor: colorWhite,
-      textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      minimumSize: Size.fromHeight(50),
+      textStyle: TSB.semiBoldSmall(textColor: Colors.white),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(5),
       ),
     ),
+  );
+
+  static final _inputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(5),
+    borderSide: const BorderSide(color: bg_edit_text_color),
   );
 
   static final appTheme = ThemeData(
@@ -27,34 +33,24 @@ class AppTheme {
       style: TextButton.styleFrom(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
-        textStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
+        textStyle: TSB.regularSmall(underLineText: true),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.transparent,
-      contentPadding: const EdgeInsets.all(30),
-      hintStyle: const TextStyle(
-        color: Color(0xff383838),
-        fontWeight: FontWeight.w500,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
+      fillColor: bg_edit_text_color,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+      hintStyle: TSB.regularSmall(textColor: grey_hint_text_color),
+      border: _inputBorder,
+      enabledBorder: _inputBorder,
+      disabledBorder: _inputBorder,
+      errorBorder: _inputBorder.copyWith(
         borderSide: const BorderSide(
-          color: Colors.black,
-          width: 0.4,
+          color: Colors.red,
         ),
       ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
-        borderSide: const BorderSide(
-          color: Colors.black,
-          width: 0.4,
-        ),
-      ),
+      focusedBorder: _inputBorder,
+      focusedErrorBorder: _inputBorder,
     ),
   );
 }
