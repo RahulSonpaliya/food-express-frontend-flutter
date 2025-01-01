@@ -29,7 +29,7 @@ class SignUpView extends StackedView<SignUpViewModel> {
               ),
             ]),
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: _formKey,
             child: Column(
@@ -54,6 +54,62 @@ class SignUpView extends StackedView<SignUpViewModel> {
                   onCountryCodeChanged: (val) => model.updateCountryCode(val!),
                   onMobileNumberChanged: (val) => model.mobile = val,
                   mobileFocusNode: _mobileNode,
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  style: TSB.regularSmall(),
+                  textInputAction: TextInputAction.next,
+                  onChanged: (String val) => model.name = val.trim(),
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Name is required';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(hintText: 'Name'),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  style: TSB.regularSmall(),
+                  textInputAction: TextInputAction.next,
+                  onChanged: (String val) => model.email = val.trim(),
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Email Address is required';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(hintText: 'Email Address'),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  style: TSB.regularSmall(),
+                  textInputAction: TextInputAction.next,
+                  obscureText: true,
+                  onChanged: (String val) => model.password = val,
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Password is required';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(hintText: 'Password'),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  style: TSB.regularSmall(),
+                  textInputAction: TextInputAction.done,
+                  obscureText: true,
+                  onChanged: (String val) => model.confirmPassword = val,
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Confirm Password is required';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(hintText: 'Confirm Password'),
                 ),
                 SizedBox(height: 15),
                 Row(

@@ -1,4 +1,5 @@
 import 'package:shared/app/locator.dart';
+import 'package:shared/common_utils.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -9,6 +10,9 @@ class SignUpViewModel extends BaseViewModel {
   var _dialogService = locator.get<DialogService>();
   var _snackBarService = locator.get<SnackbarService>();
 
+  String name = "", email = "";
+  String password = "";
+  String confirmPassword = "";
   String mobile = '';
 
   bool _agree = false;
@@ -49,6 +53,10 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   signUp() async {
+    if (!agree) {
+      showDialog("Please accept terms conditions & privacy policy.");
+      return;
+    }
     // TODO implement
   }
 
