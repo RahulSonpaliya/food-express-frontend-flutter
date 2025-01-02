@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:food_express_customer/data/model/api_response/base_response.dart';
+
 import '../model/api_response/login_response.dart';
 import '../model/api_response/register_response.dart';
 
@@ -9,4 +11,8 @@ Future<LogInResponse> parseLogInResponse(String responseBody) async {
 
 Future<RegisterResponse> parseRegisterResponse(String responseBody) async {
   return RegisterResponse.fromJson(json.decode(responseBody));
+}
+
+Future<BaseResponse> parseBaseResponse(String responseBody) async {
+  return BaseResponse.fromJson(json.decode(responseBody));
 }
