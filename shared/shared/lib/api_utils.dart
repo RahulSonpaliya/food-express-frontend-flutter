@@ -18,12 +18,12 @@ Future<Either<Failure, Q>> callPostAPI<Q, R>(String apiURL,
     debugPrint('headers : $headers');
     debugPrint('body : $body');
     http.Response response = await http
-        .post(Uri.parse(apiURL), headers: headers, body: body)
+        .post(Uri.parse(apiURL), headers: headers, body: jsonEncode(body))
         .timeout(API_TIME_OUT);
     return parseResponse(response, callback);
   } on SocketException {
     return Left(NoInternetError(0,
-        'something went wrong while connecting to server! Please try again later.'));
+        'Network error: Unable to connect to the server. Please check your internet connection or try again later.'));
   } on TimeoutException {
     return Left(TimeoutError(0, 'request time out'));
   }
@@ -117,7 +117,7 @@ Future<Either<Failure, Q>> parseResponse<Q, R>(
     debugPrint(
         'response.statusCode : ${response.statusCode} | response.body ${response.body}');
     try {
-      if (response.statusCode == 200) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         bool success = json.decode(response.body)['success'];
         if (success) {
           var result = await compute(callback, response.body);
@@ -128,8 +128,8 @@ Future<Either<Failure, Q>> parseResponse<Q, R>(
           return Left(ServerError(response.statusCode, errorMsg));
         }
       } else {
-        var errorObj = json.decode(response.body)['error'];
-        var errorMsg = errorObj['message'];
+        var errorObj = json.decode(response.body);
+        var errorMsg = errorObj['errorMessage'];
         return Left(ServerError(response.statusCode, errorMsg));
       }
     } catch (e) {
