@@ -44,7 +44,8 @@ void handleFailure(failure,
       okBtnClick = () async {};
     }
   } else if (failure is NoInternetError) {
-    message = "Please check internet connection";
+    message =
+        "Network error: Unable to connect to the server. Please check your internet connection or try again later.";
   }
 
   showDialog(message,
