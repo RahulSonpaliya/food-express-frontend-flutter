@@ -44,7 +44,8 @@ class SplashViewModel extends BaseViewModel {
                   }
                 });
               } else {
-                Get.offAll(LoginView(), transition: Transition.rightToLeft);
+                Get.offAll(() => LoginView(),
+                    transition: Transition.rightToLeft);
               }
             });
           } else {

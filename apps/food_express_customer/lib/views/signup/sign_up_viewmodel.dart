@@ -1,14 +1,15 @@
+import 'package:food_express_customer/data/remote/repository.dart';
 import 'package:shared/app/locator.dart';
 import 'package:shared/common_utils.dart';
+import 'package:shared/constants.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../login/login_view.dart';
+import '../otp_verification/otp_verification_view.dart';
 
 class SignUpViewModel extends BaseViewModel {
   final _navigationService = locator.get<NavigationService>();
-  var _dialogService = locator.get<DialogService>();
-  var _snackBarService = locator.get<SnackbarService>();
 
   String name = "", email = "";
   String password = "";
@@ -43,13 +44,10 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   navigateToVerifyOTP() {
-    // TODO implement
-    // _navigationService.replaceWithTransition(
-    //     OtpVerificationView(
-    //       countryCode: _selectedCCode,
-    //       mobileNum: mobile,
-    //     ),
-    //     transitionStyle: Transition.rightToLeft);
+    _navigationService.navigateWithTransition(
+      OtpVerificationView(countryCode: _selectedCCode, mobileNum: mobile),
+      transitionStyle: Transition.rightToLeft,
+    );
   }
 
   signUp() async {
@@ -57,33 +55,34 @@ class SignUpViewModel extends BaseViewModel {
       showDialog("Please accept terms conditions & privacy policy.");
       return;
     }
-    // TODO implement
+    showLoading();
+    var result = await locator<Repository>().signUp(
+      requestBody: _getRequestForSignUp(),
+    );
+    hideLoading();
+    result.fold(
+      (failure) => handleFailure(failure),
+      (response) {
+        showDialog(response.message, okBtnClick: () {
+          if (response.otpVerified) {
+            // TODO implement -> redirect to home page
+          } else {
+            navigateToVerifyOTP();
+          }
+        });
+      },
+    );
   }
 
-  // _handleSignUpResponse(SignUpResponse signUpResponse, String selectedCCode,
-  //     String mobile, String password, String confirmPassword) {
-  //   if (signUpResponse.isVerify == 0) {
-  //     _navigationService.navigateWithTransition(
-  //         OtpVerificationView(
-  //           countryCode: _selectedCCode,
-  //           mobileNum: mobile,
-  //         ),
-  //         transition: NavigationTransition.RightToLeft);
-  //   } else {
-  //     _navigationService.navigateWithTransition(
-  //         CompleteProfileView(
-  //           userId: signUpResponse.isUserId,
-  //         ),
-  //         transition: NavigationTransition.RightToLeft);
-  //   }
-  // }
-
-  // Future<Map<String, String>> _getRequestForSignUp() async {
-  //   Map<String, String> request = {};
-  //   request['country_code'] = _selectedCCode;
-  //   request['phone_number'] = mobile;
-  //   request['role'] = ROLE;
-  //   printMsg("getRequestForSignUp :: $request");
-  //   return request;
-  // }
+  Map<String, String> _getRequestForSignUp() {
+    Map<String, String> request = {};
+    request['countryCode'] = _selectedCCode;
+    request['phoneNumber'] = mobile;
+    request['name'] = name;
+    request['emailId'] = email;
+    request['password'] = password;
+    request['confirmPassword'] = confirmPassword;
+    request['accountType'] = acTypeCustomer;
+    return request;
+  }
 }
