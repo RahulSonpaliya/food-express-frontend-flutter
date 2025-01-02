@@ -59,7 +59,7 @@ class OtpVerificationView extends StackedView<OtpVerificationViewModel> {
             Align(
               alignment: Alignment.center,
               child: InkWell(
-                // onTap: model.resendOtpApi,
+                onTap: model.resendOtp,
                 child: Text(
                   'Resend OTP',
                   style: TSB.semiBoldMedium(textColor: theme_blue_color_1),
@@ -68,7 +68,7 @@ class OtpVerificationView extends StackedView<OtpVerificationViewModel> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: model.verifyOtp,
               child: Text(
                 'Verify',
                 style: TSB.semiBoldSmall(textColor: Colors.white),
