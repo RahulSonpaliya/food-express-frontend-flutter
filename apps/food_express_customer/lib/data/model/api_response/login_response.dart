@@ -1,11 +1,21 @@
+import '../bean/user.dart';
 import 'base_response.dart';
 
 class LogInResponse extends BaseResponse {
+  late bool otpVerified;
+  late num userId;
+  User? user;
   LogInResponse({required super.success, required super.message});
 
   factory LogInResponse.fromJson(Map<String, dynamic> parsedJson) {
     final message = parsedJson['message'] ?? '';
     final success = parsedJson['success'] ?? false;
-    return LogInResponse(message: message, success: success);
+    final response = LogInResponse(message: message, success: success);
+    response.otpVerified = parsedJson['otpVerified'];
+    response.userId = parsedJson['userId'];
+    if (response.otpVerified) {
+      response.user = User.fromJson(parsedJson['user']);
+    }
+    return response;
   }
 }
