@@ -65,7 +65,7 @@ class SignUpViewModel extends BaseViewModel {
       (response) {
         showDialog(response.message, okBtnClick: () {
           if (response.otpVerified) {
-            // TODO implement -> redirect to home page
+            // TODO implement -> redirect to location page
           } else {
             navigateToVerifyOTP();
           }

@@ -6,6 +6,8 @@ import 'package:shared/data/local/preference_keys.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../data/model/bean/user.dart';
+import '../otp_verification/otp_verification_view.dart';
 import '../signup/sign_up_view.dart';
 
 class LogInViewModel extends BaseViewModel {
@@ -32,6 +34,13 @@ class LogInViewModel extends BaseViewModel {
         transitionStyle: Transition.rightToLeft);
   }
 
+  navigateToVerifyOTP() {
+    _navigationService.navigateWithTransition(
+      OtpVerificationView(countryCode: _selectedCCode, mobileNum: mobile),
+      transitionStyle: Transition.rightToLeft,
+    );
+  }
+
   login() async {
     showLoading();
     var result = await locator<Repository>().logIn(
@@ -39,8 +48,19 @@ class LogInViewModel extends BaseViewModel {
     );
     hideLoading();
     result.fold(
-      (failure) {},
-      (response) {},
+      (failure) => handleFailure(failure),
+      (response) async {
+        if (response.otpVerified) {
+          await User.saveUser(response.user!);
+        }
+        showDialog(response.message, okBtnClick: () {
+          if (response.otpVerified) {
+            // TODO implement -> redirect to location page
+          } else {
+            navigateToVerifyOTP();
+          }
+        });
+      },
     );
   }
 
