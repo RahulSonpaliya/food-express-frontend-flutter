@@ -61,6 +61,7 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                   onPressed: () {
                     if (_formKey.currentState?.validate() ?? false) {
                       hideKeyboard(context);
+                      model.submit();
                     }
                   },
                   child: Text('Submit'),

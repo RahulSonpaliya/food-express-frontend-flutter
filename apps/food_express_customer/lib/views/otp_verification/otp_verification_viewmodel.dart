@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/locator.dart';
-import '../login/login_view.dart';
 
 class OtpVerificationViewModel extends BaseViewModel {
   final _navigationService = locator.get<NavigationService>();
@@ -33,7 +32,7 @@ class OtpVerificationViewModel extends BaseViewModel {
       (failure) => handleFailure(failure),
       (response) {
         showDialog(response.message, okBtnClick: () {
-          _navigationService.clearStackAndShowView(LoginView());
+          _navigationService.back(result: true);
         });
       },
     );
