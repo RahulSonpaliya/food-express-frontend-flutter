@@ -1,6 +1,14 @@
+import 'package:shared/common_utils.dart';
+import 'package:shared/constants.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+import '../../app/locator.dart';
+import '../../data/remote/repository.dart';
+import '../otp_verification/otp_verification_view.dart';
 
 class ForgotPasswordViewModel extends BaseViewModel {
+  final _navigationService = locator.get<NavigationService>();
   String mobile = '';
   String _selectedCCode = '+1';
   String get selectedCCode => _selectedCCode;
@@ -8,5 +16,38 @@ class ForgotPasswordViewModel extends BaseViewModel {
   updateCountryCode(String val) {
     _selectedCCode = val;
     notifyListeners();
+  }
+
+  navigateToVerifyOTP() async {
+    bool? result = await _navigationService.navigateWithTransition(
+      OtpVerificationView(countryCode: _selectedCCode, mobileNum: mobile),
+      transitionStyle: Transition.rightToLeft,
+    );
+    if (result ?? false) {
+      // TODO implement - navigate to reset password
+    }
+  }
+
+  submit() async {
+    showLoading();
+    var result = await locator<Repository>().resendOtp(
+      requestBody: _getRequestForSendOtp(),
+    );
+    hideLoading();
+    result.fold(
+      (failure) => handleFailure(failure),
+      (response) => showDialog(
+        response.message,
+        okBtnClick: navigateToVerifyOTP,
+      ),
+    );
+  }
+
+  Map<String, String> _getRequestForSendOtp() {
+    Map<String, String> request = {};
+    request['countryCode'] = _selectedCCode;
+    request['phoneNumber'] = mobile;
+    request['accountType'] = acTypeCustomer;
+    return request;
   }
 }
