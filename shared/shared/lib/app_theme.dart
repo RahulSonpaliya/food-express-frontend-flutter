@@ -29,6 +29,10 @@ class AppTheme {
     elevatedButtonTheme: _elevatedButtonTheme,
     colorScheme: ColorScheme.fromSeed(seedColor: theme_bg_color_1)
         .copyWith(onSurface: theme_bg_color_1),
+    appBarTheme: AppBarTheme(
+      backgroundColor: theme_bg_color_1,
+      foregroundColor: Colors.black,
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         backgroundColor: Colors.transparent,

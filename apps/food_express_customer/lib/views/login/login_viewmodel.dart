@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../data/model/bean/user.dart';
+import '../forgot_password/forgot_password_view.dart';
 import '../otp_verification/otp_verification_view.dart';
 import '../signup/sign_up_view.dart';
 
@@ -24,9 +25,8 @@ class LogInViewModel extends BaseViewModel {
   }
 
   navigateToForgotPassword() {
-    // TODO implement
-    // _navigationService.navigateWithTransition(ForgotPasswordView(),
-    //     transition: NavigationTransition.RightToLeft);
+    _navigationService.navigateWithTransition(ForgotPasswordView(),
+        transitionStyle: Transition.rightToLeft);
   }
 
   navigateToSignUp() {
