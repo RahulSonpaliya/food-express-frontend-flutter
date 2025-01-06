@@ -1,3 +1,4 @@
+import 'package:food_express_customer/views/reset_password/reset_password_view.dart';
 import 'package:shared/common_utils.dart';
 import 'package:shared/constants.dart';
 import 'package:stacked/stacked.dart';
@@ -24,7 +25,10 @@ class ForgotPasswordViewModel extends BaseViewModel {
       transitionStyle: Transition.rightToLeft,
     );
     if (result ?? false) {
-      // TODO implement - navigate to reset password
+      _navigationService.navigateWithTransition(
+        ResetPasswordView(countryCode: _selectedCCode, phoneNumber: mobile),
+        transitionStyle: Transition.rightToLeft,
+      );
     }
   }
 

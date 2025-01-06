@@ -43,11 +43,14 @@ class SignUpViewModel extends BaseViewModel {
         transitionStyle: Transition.rightToLeft);
   }
 
-  navigateToVerifyOTP() {
-    _navigationService.navigateWithTransition(
+  navigateToVerifyOTP() async {
+    bool? result = await _navigationService.navigateWithTransition(
       OtpVerificationView(countryCode: _selectedCCode, mobileNum: mobile),
       transitionStyle: Transition.rightToLeft,
     );
+    if (result ?? false) {
+      navigateToLogin();
+    }
   }
 
   signUp() async {
