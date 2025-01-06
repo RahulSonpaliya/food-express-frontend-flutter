@@ -12,6 +12,7 @@ const String LOGIN_URL = BASE_URL + "/users/login";
 const String REGISTER_URL = BASE_URL + "/users/register";
 const String VERIFY_OTP_URL = BASE_URL + "/users/verifyOtp";
 const String RESEND_OTP_URL = BASE_URL + "/users/resendOtp";
+const String RESET_PASSWORD_URL = BASE_URL + "/users/resetPassword";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -26,6 +27,9 @@ abstract class Repository {
       {required Map<String, String> requestBody});
 
   Future<Either<Failure, BaseResponse>> resendOtp(
+      {required Map<String, String> requestBody});
+
+  Future<Either<Failure, BaseResponse>> resetPassword(
       {required Map<String, String> requestBody});
 }
 
@@ -55,6 +59,13 @@ class Network extends Repository {
   Future<Either<Failure, BaseResponse>> resendOtp(
       {required Map<String, String> requestBody}) async {
     return await callPostAPI(RESEND_OTP_URL, HEADER, parseBaseResponse,
+        body: requestBody);
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> resetPassword(
+      {required Map<String, String> requestBody}) async {
+    return await callPostAPI(RESET_PASSWORD_URL, HEADER, parseBaseResponse,
         body: requestBody);
   }
 }
