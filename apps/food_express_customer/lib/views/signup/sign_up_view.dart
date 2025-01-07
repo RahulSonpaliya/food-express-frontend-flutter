@@ -3,6 +3,7 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:shared/app_images.dart';
 import 'package:shared/colors.dart';
 import 'package:shared/common_utils.dart' as common_utils;
+import 'package:shared/constants.dart';
 import 'package:shared/mobile_number_input_widget.dart';
 import 'package:shared/password_input_widget.dart';
 import 'package:shared/text_styles.dart';
@@ -158,8 +159,7 @@ class SignUpView extends StackedView<SignUpViewModel> {
                         if (!common_utils.isValidPassword(model.password) ||
                             !common_utils
                                 .isValidPassword(model.confirmPassword)) {
-                          common_utils.showDialog(
-                              'Password must be 8-15 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.');
+                          common_utils.showDialog(passwordValidationMessage);
                         }
                       }
                     }

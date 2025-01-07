@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared/app_images.dart';
 import 'package:shared/colors.dart';
-import 'package:shared/common_utils.dart';
+import 'package:shared/common_utils.dart' as common_utils;
+import 'package:shared/constants.dart';
+import 'package:shared/password_input_widget.dart';
 import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
@@ -44,39 +46,38 @@ class ResetPasswordView extends StackedView<ResetPasswordViewModel> {
                 style: TSB.semiBoldMedium(textColor: grey_sub_text_color),
               ),
               SizedBox(height: 18),
-              TextFormField(
-                style: TSB.regularSmall(),
-                textInputAction: TextInputAction.next,
-                obscureText: true,
+              PasswordInputWidget(
+                hintText: 'Password',
                 onChanged: (String val) => model.password = val,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Password is required';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(hintText: 'Password'),
+                textInputAction: TextInputAction.next,
               ),
               SizedBox(height: 10),
-              TextFormField(
-                style: TSB.regularSmall(),
-                textInputAction: TextInputAction.done,
-                obscureText: true,
+              PasswordInputWidget(
+                hintText: 'Confirm Password',
                 onChanged: (String val) => model.confirmPassword = val,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Confirm Password is required';
+                textInputAction: TextInputAction.done,
+                validatorFunction: (value) {
+                  if (value != model.password) {
+                    return 'Passwords do not match';
                   }
                   return null;
                 },
-                decoration: InputDecoration(hintText: 'Confirm Password'),
               ),
               SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {
+                  common_utils.hideKeyboard(context);
                   if (_formKey.currentState?.validate() ?? false) {
-                    hideKeyboard(context);
                     model.submit();
+                  } else {
+                    if (model.password.isNotEmpty ||
+                        model.confirmPassword.isNotEmpty) {
+                      if (!common_utils.isValidPassword(model.password) ||
+                          !common_utils
+                              .isValidPassword(model.confirmPassword)) {
+                        common_utils.showDialog(passwordValidationMessage);
+                      }
+                    }
                   }
                 },
                 child: Text('Submit'),
