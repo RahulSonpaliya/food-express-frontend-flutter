@@ -10,16 +10,17 @@ hideKeyboard(BuildContext context) {
   FocusScope.of(context).requestFocus(FocusNode());
 }
 
+bool isValidPassword(String value) {
+  final regex = RegExp(
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,15}$');
+  return regex.hasMatch(value);
+}
+
 showLoading() => locator<DialogService>().showCustomDialog(
       variant: DialogType.Loading,
     );
 
 hideLoading() => locator<DialogService>().completeDialog(DialogResponse());
-
-// hideLoading() async {
-//   locator<DialogService>().completeDialog(DialogResponse());
-//   await Future.delayed(Duration(milliseconds: 5));
-// }
 
 final _dialogService = locator.get<DialogService>();
 
