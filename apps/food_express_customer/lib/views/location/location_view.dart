@@ -23,6 +23,7 @@ class LocationView extends StackedView<LocationViewModel> {
             children: [
               SizedBox(height: 15),
               TextField(
+                controller: TextEditingController(text: model.addressVal),
                 style: TSB.regularSmall(),
                 readOnly: true,
                 enableInteractiveSelection: false,

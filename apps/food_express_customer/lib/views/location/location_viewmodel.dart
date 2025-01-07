@@ -3,6 +3,8 @@ import 'package:shared/common_utils.dart';
 import 'package:shared/secrets.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../data/model/bean/user_address.dart';
+
 class LocationViewModel extends BaseViewModel {
   String addressVal = '';
 
@@ -25,13 +27,13 @@ class LocationViewModel extends BaseViewModel {
   _updateAddressLatLng(String address, double lat, double lng) async {
     addressVal = address;
     notifyListeners();
-    // TODO implement
-    // UserAddressBean userAddressBean = new UserAddressBean();
-    // userAddressBean.address = _address;
-    // userAddressBean.latitude = lat.toString();
-    // userAddressBean.longitude = lng.toString();
-    // await UserAddressBean.saveUser(userAddressBean);
-    // appUserAddress.value = await UserAddressBean.getSavedUser();
-    // appUserAddress.notifyListeners();
+    UserAddress userAddressBean = UserAddress(
+      address: addressVal,
+      latitude: lat.toString(),
+      longitude: lng.toString(),
+    );
+    await UserAddress.saveUserAddress(userAddressBean);
+    appUserAddress.value = await UserAddress.getSavedUserAddress();
+    appUserAddress.notifyListeners();
   }
 }
