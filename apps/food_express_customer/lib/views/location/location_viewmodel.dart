@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:shared/common_utils.dart';
+import 'package:shared/geocoding_utils.dart';
+import 'package:shared/location_utils.dart';
 import 'package:shared/secrets.dart';
 import 'package:stacked/stacked.dart';
 
@@ -35,5 +38,33 @@ class LocationViewModel extends BaseViewModel {
     await UserAddress.saveUserAddress(userAddressBean);
     appUserAddress.value = await UserAddress.getSavedUserAddress();
     appUserAddress.notifyListeners();
+  }
+
+  getUserLocation() async {
+    if (await LocationUtils.handlePermission()) {
+      showLoading();
+      var currentPosition = await LocationUtils.getCurrentPosition();
+      debugPrint(
+          'getUserLocation --------> currentPosition----> ${currentPosition?.toJson()}');
+      if (currentPosition != null) {
+        final address = await GeocodingUtils.getCompleteAddressFromCoordinates(
+          currentPosition.latitude,
+          currentPosition.longitude,
+        );
+        debugPrint('getUserLocation --------> address----> $address');
+        if (address != null) {
+          await _updateAddressLatLng(
+            address,
+            currentPosition.latitude,
+            currentPosition.longitude,
+          );
+        }
+      }
+      hideLoading();
+    }
+  }
+
+  navigateToHome() {
+    // TODO implement
   }
 }

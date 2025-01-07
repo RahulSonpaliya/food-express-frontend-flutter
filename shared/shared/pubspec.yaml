@@ -16,6 +16,8 @@ dependencies:
   dartz: ^0.10.1
   http: ^1.2.2
   flutter_otp_text_field: ^1.4.0+2
+  geolocator: ^13.0.2
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -16,6 +16,11 @@ showLoading() => locator<DialogService>().showCustomDialog(
 
 hideLoading() => locator<DialogService>().completeDialog(DialogResponse());
 
+// hideLoading() async {
+//   locator<DialogService>().completeDialog(DialogResponse());
+//   await Future.delayed(Duration(milliseconds: 5));
+// }
+
 final _dialogService = locator.get<DialogService>();
 
 void handleFailure(failure,

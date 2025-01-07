@@ -34,50 +34,51 @@ class LocationView extends StackedView<LocationViewModel> {
                 ),
               ),
               SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: cart_item_border_color, width: 1.0),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.0),
+              GestureDetector(
+                onTap: model.getUserLocation,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border:
+                        Border.all(color: cart_item_border_color, width: 1.0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 8,
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Get Current Location',
-                              style: TSB.regularMedium(),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'Using GPS',
-                              style: TSB.regularSmall(
-                                textColor: grey_hint_text_color,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Get Current Location',
+                                style: TSB.regularMedium(),
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 5),
+                              Text(
+                                'Using GPS',
+                                style: TSB.regularSmall(
+                                  textColor: grey_hint_text_color,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.location_on_outlined),
+                      Expanded(
+                        child: Icon(Icons.location_on_outlined),
                       ),
-                    ),
-                    SizedBox(width: 10),
-                  ],
+                      SizedBox(width: 10),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 30),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: model.navigateToHome,
                 child: Text('Save'),
               )
             ],
