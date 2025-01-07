@@ -32,6 +32,8 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: theme_bg_color_1,
       foregroundColor: Colors.black,
+      titleTextStyle: TSB.boldLarge(),
+      centerTitle: true,
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
