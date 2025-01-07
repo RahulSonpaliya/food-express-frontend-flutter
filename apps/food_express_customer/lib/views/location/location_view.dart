@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:food_express_customer/views/location/location_viewmodel.dart';
 import 'package:shared/colors.dart';
+import 'package:shared/secrets.dart';
 import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
@@ -8,8 +11,7 @@ class LocationView extends StackedView<LocationViewModel> {
   const LocationView({super.key});
 
   @override
-  Widget builder(
-      BuildContext context, LocationViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, LocationViewModel model, Widget? child) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Location'),
@@ -21,6 +23,11 @@ class LocationView extends StackedView<LocationViewModel> {
             children: [
               SizedBox(height: 15),
               TextField(
+                style: TSB.regularSmall(),
+                readOnly: true,
+                enableInteractiveSelection: false,
+                onTap: () => openGooglePlaceAutoComplete(model, context),
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   hintText: 'Search for Area or Street Name...',
                 ),
@@ -77,6 +84,21 @@ class LocationView extends StackedView<LocationViewModel> {
         ),
       ),
     );
+  }
+
+  openGooglePlaceAutoComplete(
+      LocationViewModel model, BuildContext context) async {
+    Prediction? prediction = await PlacesAutocomplete.show(
+      context: context,
+      apiKey: Google_API_KEY,
+      mode: Mode.fullscreen,
+      language: "en",
+      components: [Component(Component.country, 'in')],
+      resultTextStyle: TSB.regularMedium(),
+    );
+    if (prediction != null) {
+      model.getPlaceDetails(prediction);
+    }
   }
 
   @override

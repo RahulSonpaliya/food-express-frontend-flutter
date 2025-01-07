@@ -40,6 +40,7 @@ dependencies:
   keyboard_actions: ^4.2.0
   dartz: ^0.10.1
   get_it: ^8.0.3
+  flutter_google_places_hoc081098: ^2.0.0
   shared:
     path: ../../shared/shared
 
