@@ -1,3 +1,4 @@
+import 'package:food_express_customer/views/location/location_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/data/local/app_shared_prefs.dart';
 import 'package:shared/data/local/preference_keys.dart';
@@ -34,9 +35,8 @@ class SplashViewModel extends BaseViewModel {
                     .getValue(PreferenceKeys.USER_ADDRESS_DATA)
                     .then((value) async {
                   if (value == null) {
-                    // TODO
-                    //navigate to location screen
-                    // Get.offAll(LocationView(), transition: Transition.rightToLeft);
+                    Get.offAll(() => const LocationView(),
+                        transition: Transition.rightToLeft);
                   } else {
                     // TODO
                     //navigate to home screen

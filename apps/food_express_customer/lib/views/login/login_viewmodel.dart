@@ -8,6 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../data/model/bean/user.dart';
 import '../forgot_password/forgot_password_view.dart';
+import '../location/location_view.dart';
 import '../otp_verification/otp_verification_view.dart';
 import '../signup/sign_up_view.dart';
 
@@ -41,6 +42,10 @@ class LogInViewModel extends BaseViewModel {
     );
   }
 
+  navigateToLocationView() {
+    _navigationService.clearStackAndShowView(LocationView());
+  }
+
   login() async {
     showLoading();
     var result = await locator<Repository>().logIn(
@@ -55,7 +60,7 @@ class LogInViewModel extends BaseViewModel {
         }
         showDialog(response.message, okBtnClick: () {
           if (response.otpVerified) {
-            // TODO implement -> redirect to location page
+            navigateToLocationView();
           } else {
             navigateToVerifyOTP();
           }
@@ -75,8 +80,7 @@ class LogInViewModel extends BaseViewModel {
 
   guestLogin() async {
     await AppSharedPrefs.get().addBoolean(PreferenceKeys.GUEST_USER, true);
-    // _navigationService.replaceWithTransition(LocationView(),
-    //     transition: NavigationTransition.RightToLeft);
+    navigateToLocationView();
   }
 
   navigateBack() {
