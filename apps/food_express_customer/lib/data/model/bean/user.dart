@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:shared/data/local/app_shared_prefs.dart';
 import 'package:shared/data/local/preference_keys.dart';
+
+ValueNotifier<User?> appUser = ValueNotifier<User?>(null);
 
 class User {
   final num id;
