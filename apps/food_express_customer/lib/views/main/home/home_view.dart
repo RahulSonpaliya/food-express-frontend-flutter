@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_express_customer/views/main/home/nearby_store_view.dart';
 import 'package:shared/app_images.dart';
-import 'package:shared/colors.dart';
+import 'package:shared/simple_icon_widget.dart';
 import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
@@ -92,22 +92,11 @@ class _HomeViewState extends State<HomeView>
                         ),
                         Expanded(
                           flex: 2,
-                          child: Material(
-                            color: bg_edit_text_color,
-                            borderRadius: BorderRadius.circular(5),
-                            child: InkWell(
-                              onTap: () {
-                                // TODO: implement
-                              },
-                              borderRadius: BorderRadius.circular(5),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Icon(
-                                  Icons.filter_alt_outlined,
-                                  color: theme_blue_color_1,
-                                ),
-                              ),
-                            ),
+                          child: SimpleIconWidget(
+                            onTap: () {
+                              // TODO: implement
+                            },
+                            icon: Icons.filter_alt_outlined,
                           ),
                         )
                       ],
