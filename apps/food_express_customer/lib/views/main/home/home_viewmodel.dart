@@ -1,11 +1,14 @@
 import 'package:stacked/stacked.dart';
 
+import '../../../data/model/bean/category.dart';
 import '../../../data/model/bean/user_address.dart';
 
 class HomeViewModel extends BaseViewModel {
   String longitude = '';
   String latitude = '';
   String address = '';
+  final List<Category> _categoryList = List.empty(growable: true);
+  List<Category> get categoryList => _categoryList;
 
   HomeViewModel() {
     _getHomeDetails();
@@ -33,5 +36,11 @@ class HomeViewModel extends BaseViewModel {
 
   searchClick() {
     // TODO: implement
+  }
+
+  onCategoryClick(Category category) {
+    if (category.id != -1) {
+      // TODO: implement
+    }
   }
 }
