@@ -12,6 +12,7 @@ class User {
   final String phoneNumber;
   final String name;
   final String emailId;
+  String profileImage;
 
   User({
     required this.id,
@@ -19,6 +20,7 @@ class User {
     required this.phoneNumber,
     required this.name,
     required this.emailId,
+    required this.profileImage,
   });
 
   Map<String, dynamic> toJson(User obj) {
@@ -28,6 +30,7 @@ class User {
       'phoneNumber': obj.phoneNumber,
       'name': obj.name,
       'emailId': obj.emailId,
+      'profileImage': obj.profileImage,
     };
   }
 
@@ -38,6 +41,7 @@ class User {
       phoneNumber: parsedJson['phoneNumber'],
       name: parsedJson['name'],
       emailId: parsedJson['emailId'],
+      profileImage: parsedJson['profileImage'],
     );
   }
 
