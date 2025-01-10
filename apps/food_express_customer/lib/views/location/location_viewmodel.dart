@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
+import 'package:get/get.dart';
 import 'package:shared/common_utils.dart';
 import 'package:shared/geocoding_utils.dart';
 import 'package:shared/location_utils.dart';
@@ -7,6 +8,7 @@ import 'package:shared/secrets.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../data/model/bean/user_address.dart';
+import '../main/main_view.dart';
 
 class LocationViewModel extends BaseViewModel {
   String addressVal = '';
@@ -65,6 +67,6 @@ class LocationViewModel extends BaseViewModel {
   }
 
   navigateToHome() {
-    // TODO implement
+    Get.offAll(() => const MainView(), transition: Transition.rightToLeft);
   }
 }
