@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared/colors.dart';
 import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
@@ -68,16 +69,14 @@ class _MainViewState extends State<MainView>
                 ),
               ),
             ),
-            // TODO: implement
-            // onWillPop: () async {
-            //   if (_tabController.index == 0) {
-            //     model.showAppExitDialog();
-            //   } else {
-            //     _tabController.animateTo(0);
-            //     model.updateTabIndex(0);
-            //   }
-            //   return false;
-            // },
+            onPopInvokedWithResult: (flag, result) {
+              if (_tabController.index == 0) {
+                SystemNavigator.pop();
+              } else {
+                _tabController.animateTo(0);
+                model.updateTabIndex(0);
+              }
+            },
           );
         },
         viewModelBuilder: () => MainViewModel());
