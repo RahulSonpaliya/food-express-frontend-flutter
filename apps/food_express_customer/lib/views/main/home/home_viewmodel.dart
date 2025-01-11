@@ -1,13 +1,15 @@
 import 'package:stacked/stacked.dart';
 
+import '../../../app/locator.dart';
 import '../../../data/model/bean/category.dart';
 import '../../../data/model/bean/user_address.dart';
+import '../../../data/remote/repository.dart';
 
 class HomeViewModel extends BaseViewModel {
   String longitude = '';
   String latitude = '';
   String address = '';
-  final List<Category> _categoryList = List.empty(growable: true);
+  List<Category> _categoryList = List.empty(growable: true);
   List<Category> get categoryList => _categoryList;
 
   HomeViewModel() {
@@ -16,6 +18,7 @@ class HomeViewModel extends BaseViewModel {
 
   void _getHomeDetails() async {
     await _getUserLocation();
+    _getAllCategory();
     notifyListeners();
   }
 
@@ -31,11 +34,28 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> refreshScreen() async {
-    // TODO: implement
+    setBusyForObject(_categoryList, true);
+    await _getAllCategory();
   }
 
   searchClick() {
     // TODO: implement
+  }
+
+  Future _getAllCategory() async {
+    setBusyForObject(_categoryList, true);
+    var result = await locator<Repository>().getAllCategories();
+    setBusyForObject(_categoryList, false);
+    result.fold(
+      (failure) {},
+      (categoryResponse) async {
+        if (categoryResponse.success) {
+          categoryResponse.categoryList.insert(0, Category.ALL);
+          _categoryList = categoryResponse.categoryList;
+          notifyListeners();
+        }
+      },
+    );
   }
 
   onCategoryClick(Category category) {

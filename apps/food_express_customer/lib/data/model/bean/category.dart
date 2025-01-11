@@ -7,14 +7,15 @@ class Category {
   String createdAt;
   String updatedAt;
   bool isSelected = false;
-  Category(
-      {required this.id,
-      required this.name,
-      required this.image,
-      required this.description,
-      required this.status,
-      required this.createdAt,
-      required this.updatedAt});
+  Category({
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.description,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   Map<String, dynamic> toJson(Category obj) {
     return <String, dynamic>{
@@ -35,8 +36,8 @@ class Category {
       image: parsedJson['image'],
       description: parsedJson['description'],
       status: parsedJson['status'],
-      createdAt: parsedJson['created_at'],
-      updatedAt: parsedJson['updated_at'],
+      createdAt: parsedJson['createdAt'],
+      updatedAt: parsedJson['updatedAt'],
     );
   }
 

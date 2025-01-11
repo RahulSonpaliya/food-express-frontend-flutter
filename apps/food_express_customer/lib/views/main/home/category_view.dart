@@ -7,6 +7,8 @@ import 'package:shared/text_styles.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../data/remote/repository.dart';
+
 class CategoryView extends ViewModelWidget<HomeViewModel> {
   const CategoryView({super.key});
   @override
@@ -60,7 +62,7 @@ class CategoryView extends ViewModelWidget<HomeViewModel> {
 
   _catListView(HomeViewModel model) {
     return SizedBox(
-      height: 150,
+      height: 140,
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -68,7 +70,7 @@ class CategoryView extends ViewModelWidget<HomeViewModel> {
         itemBuilder: (context, index) => InkWell(
           onTap: () => model.onCategoryClick(model.categoryList[index]),
           child: SizedBox(
-            width: 120,
+            width: 100,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -78,16 +80,22 @@ class CategoryView extends ViewModelWidget<HomeViewModel> {
                   width: 70,
                   color: edit_text_bg_color,
                   child: model.categoryList[index].id != -1
-                      ? CachedNetworkImage(
-                          imageUrl: model.categoryList[index].image,
-                          fit: BoxFit.cover,
-                          placeholder: (_, url) => Image.asset(
-                            AppImages.defaultImage,
-                            fit: BoxFit.cover,
+                      ? Center(
+                          child: CachedNetworkImage(
+                            imageUrl: CATEGORY_ICON_URL +
+                                model.categoryList[index].image,
+                            height: 40,
+                            width: 40,
+                            color: theme_blue_color_1,
+                            placeholder: (_, url) => Image.asset(
+                              AppImages.defaultImage,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         )
                       : Icon(
                           Icons.category_outlined,
+                          size: 32,
                           color: theme_blue_color_1,
                         ),
                 ),

@@ -3,6 +3,7 @@ import 'package:food_express_customer/data/model/api_response/base_response.dart
 import 'package:shared/api_utils.dart';
 import 'package:shared/data/remote/failure.dart';
 
+import '../model/api_response/all_category_response.dart';
 import '../model/api_response/login_response.dart';
 import '../model/api_response/register_response.dart';
 import 'parser.dart';
@@ -13,6 +14,8 @@ const String REGISTER_URL = BASE_URL + "/users/register";
 const String VERIFY_OTP_URL = BASE_URL + "/users/verifyOtp";
 const String RESEND_OTP_URL = BASE_URL + "/users/resendOtp";
 const String RESET_PASSWORD_URL = BASE_URL + "/users/resetPassword";
+const String GET_ALL_CATEGORIES_URL = BASE_URL + "/categories/get";
+const String CATEGORY_ICON_URL = BASE_URL + "/categories/download/";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -31,6 +34,8 @@ abstract class Repository {
 
   Future<Either<Failure, BaseResponse>> resetPassword(
       {required Map<String, String> requestBody});
+
+  Future<Either<Failure, AllCategoryResponse>> getAllCategories();
 }
 
 class Network extends Repository {
@@ -67,5 +72,11 @@ class Network extends Repository {
       {required Map<String, String> requestBody}) async {
     return await callPostAPI(RESET_PASSWORD_URL, HEADER, parseBaseResponse,
         body: requestBody);
+  }
+
+  @override
+  Future<Either<Failure, AllCategoryResponse>> getAllCategories() async {
+    return await callGetAPI(
+        GET_ALL_CATEGORIES_URL, HEADER, parseAllCategoryResponse);
   }
 }
