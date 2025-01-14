@@ -16,7 +16,21 @@ class CategoryView extends ViewModelWidget<HomeViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Category', style: TSB.boldXLarge(textColor: black_text_color)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Category',
+              style: TSB.boldXLarge(
+                textColor: black_text_color,
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text('View All'),
+            ),
+          ],
+        ),
         viewModel.busy(viewModel.categoryList)
             ? _catLoadingView()
             : _catListView(viewModel)

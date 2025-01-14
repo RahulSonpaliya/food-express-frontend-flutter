@@ -50,7 +50,6 @@ class HomeViewModel extends BaseViewModel {
       (failure) {},
       (categoryResponse) async {
         if (categoryResponse.success) {
-          categoryResponse.categoryList.insert(0, Category.ALL);
           _categoryList = categoryResponse.categoryList;
           notifyListeners();
         }

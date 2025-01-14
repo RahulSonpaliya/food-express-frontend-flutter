@@ -40,13 +40,4 @@ class Category {
       updatedAt: parsedJson['updatedAt'],
     );
   }
-
-  static Category ALL = Category(
-      id: -1,
-      name: 'All',
-      image: '',
-      description: '',
-      status: '',
-      createdAt: '',
-      updatedAt: '');
 }
