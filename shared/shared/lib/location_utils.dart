@@ -10,6 +10,12 @@ class LocationUtils {
   static final GeolocatorPlatform _geolocatorPlatform =
       GeolocatorPlatform.instance;
 
+  static double getDistanceBetween2LatLng(double startLatitude,
+      double startLongitude, double endLatitude, double endLongitude) {
+    return Geolocator.distanceBetween(
+        startLatitude, startLongitude, endLatitude, endLongitude);
+  }
+
   static Future<Position?> getCurrentPosition() async =>
       await _geolocatorPlatform.getCurrentPosition();
 
