@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:shared/common_utils.dart';
+import 'package:shared/location_utils.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../app/locator.dart';
 import '../../../data/model/bean/category.dart';
+import '../../../data/model/bean/market.dart';
 import '../../../data/model/bean/user_address.dart';
 import '../../../data/remote/repository.dart';
 
@@ -11,13 +15,18 @@ class HomeViewModel extends BaseViewModel {
   String address = '';
   List<Category> _categoryList = List.empty(growable: true);
   List<Category> get categoryList => _categoryList;
+  List<Market> _marketList = List.empty(growable: true);
+  List<Market> get marketList => _marketList;
 
   HomeViewModel() {
     _getHomeDetails();
   }
 
   void _getHomeDetails() async {
+    setBusyForObject(_marketList, true);
+    setBusyForObject(_categoryList, true);
     await _getUserLocation();
+    _getAllMarkets();
     _getAllCategory();
     notifyListeners();
   }
@@ -34,8 +43,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> refreshScreen() async {
+    setBusyForObject(_marketList, true);
     setBusyForObject(_categoryList, true);
     await _getAllCategory();
+    await _getAllMarkets();
   }
 
   searchClick() {
@@ -61,5 +72,39 @@ class HomeViewModel extends BaseViewModel {
     if (category.id != -1) {
       // TODO: implement
     }
+  }
+
+  Future _getAllMarkets() async {
+    setBusyForObject(_marketList, true);
+    var result = await locator<Repository>().getNearbyMarkets(requestBody: {
+      "latitude": latitude,
+      "longitude": longitude,
+    });
+    setBusyForObject(_marketList, false);
+    result.fold((failure) {
+      debugPrint('failure $failure');
+      showRetryDialog(failure: failure);
+    }, (marketsResponse) async {
+      if (marketsResponse.success) {
+        _marketList = marketsResponse.marketList;
+        notifyListeners();
+        debugPrint('response${marketsResponse.marketList.length}');
+      }
+    });
+  }
+
+  nearByStoreListItemClick(Market market) {
+    // TODO: implement
+  }
+
+  Future<String> calculateDistance(Market market) async {
+    final distanceInMeters = LocationUtils.getDistanceBetween2LatLng(
+        double.parse(latitude),
+        double.parse(longitude),
+        market.latitude.toDouble(),
+        market.longitude.toDouble());
+    double roundDistanceInMeters =
+        double.parse((distanceInMeters).toStringAsFixed(0));
+    return '$roundDistanceInMeters Meters';
   }
 }
