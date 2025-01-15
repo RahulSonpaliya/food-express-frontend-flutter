@@ -4,6 +4,7 @@ import 'package:food_express_customer/data/model/api_response/base_response.dart
 
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/login_response.dart';
+import '../model/api_response/nearby_markets_response.dart';
 import '../model/api_response/register_response.dart';
 
 Future<LogInResponse> parseLogInResponse(String responseBody) async {
@@ -21,4 +22,9 @@ Future<BaseResponse> parseBaseResponse(String responseBody) async {
 Future<AllCategoryResponse> parseAllCategoryResponse(
     String responseBody) async {
   return AllCategoryResponse.fromJson(json.decode(responseBody));
+}
+
+Future<NearbyMarketResponse> parseNearbyMarketResponse(
+    String responseBody) async {
+  return NearbyMarketResponse.fromJson(json.decode(responseBody));
 }
