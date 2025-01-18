@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared/common_utils.dart';
 import 'package:shared/location_utils.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/locator.dart';
 import '../../../data/model/bean/category.dart';
 import '../../../data/model/bean/market.dart';
 import '../../../data/model/bean/user_address.dart';
 import '../../../data/remote/repository.dart';
+import '../../location/location_view.dart';
 
 class HomeViewModel extends BaseViewModel {
   String longitude = '';
@@ -17,6 +19,7 @@ class HomeViewModel extends BaseViewModel {
   List<Category> get categoryList => _categoryList;
   List<Market> _marketList = List.empty(growable: true);
   List<Market> get marketList => _marketList;
+  final _navigationService = locator.get<NavigationService>();
 
   HomeViewModel() {
     _getHomeDetails();
@@ -39,7 +42,8 @@ class HomeViewModel extends BaseViewModel {
   }
 
   editIconTap() {
-    // TODO: implement
+    _navigationService.navigateWithTransition(LocationView(showBack: true),
+        transitionStyle: Transition.rightToLeft);
   }
 
   Future<void> refreshScreen() async {

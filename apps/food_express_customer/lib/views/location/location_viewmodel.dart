@@ -69,4 +69,6 @@ class LocationViewModel extends BaseViewModel {
   navigateToHome() {
     Get.offAll(() => const MainView(), transition: Transition.rightToLeft);
   }
+
+  navigateBack() => Get.back();
 }

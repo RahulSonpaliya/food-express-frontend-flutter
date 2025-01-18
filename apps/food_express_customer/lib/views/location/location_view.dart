@@ -8,14 +8,22 @@ import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
 class LocationView extends StackedView<LocationViewModel> {
-  const LocationView({super.key});
+  final bool showBack;
+
+  const LocationView({super.key, this.showBack = false});
 
   @override
-  Widget builder(BuildContext context, LocationViewModel model, Widget? child) {
+  Widget builder(
+      BuildContext context, LocationViewModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Location'),
-      ),
+          title: Text('Location'),
+          leading: showBack
+              ? IconButton(
+                  onPressed: viewModel.navigateBack,
+                  icon: Icon(Icons.arrow_back),
+                )
+              : null),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(20),
@@ -23,11 +31,11 @@ class LocationView extends StackedView<LocationViewModel> {
             children: [
               SizedBox(height: 15),
               TextField(
-                controller: TextEditingController(text: model.addressVal),
+                controller: TextEditingController(text: viewModel.addressVal),
                 style: TSB.regularSmall(),
                 readOnly: true,
                 enableInteractiveSelection: false,
-                onTap: () => openGooglePlaceAutoComplete(model, context),
+                onTap: () => openGooglePlaceAutoComplete(viewModel, context),
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   hintText: 'Search for Area or Street Name...',
@@ -35,7 +43,7 @@ class LocationView extends StackedView<LocationViewModel> {
               ),
               SizedBox(height: 20),
               GestureDetector(
-                onTap: model.getUserLocation,
+                onTap: viewModel.getUserLocation,
                 child: Container(
                   decoration: BoxDecoration(
                     border:
@@ -78,7 +86,7 @@ class LocationView extends StackedView<LocationViewModel> {
               ),
               SizedBox(height: 30),
               ElevatedButton(
-                onPressed: model.navigateToHome,
+                onPressed: viewModel.navigateToHome,
                 child: Text('Save'),
               )
             ],
