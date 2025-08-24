@@ -41,7 +41,7 @@ class User {
       phoneNumber: parsedJson['phoneNumber'],
       name: parsedJson['name'],
       emailId: parsedJson['emailId'],
-      profileImage: parsedJson['profileImage'],
+      profileImage: parsedJson['profileImage'] ?? "",
     );
   }
 

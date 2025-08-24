@@ -12,6 +12,7 @@ import '../main/main_view.dart';
 
 class LocationViewModel extends BaseViewModel {
   String addressVal = '';
+  UserAddress? userAddressBean;
 
   getPlaceDetails(Prediction prediction) async {
     if (prediction.placeId != null) {
@@ -32,12 +33,13 @@ class LocationViewModel extends BaseViewModel {
   _updateAddressLatLng(String address, double lat, double lng) async {
     addressVal = address;
     notifyListeners();
-    UserAddress userAddressBean = UserAddress(
+    userAddressBean = UserAddress(
       address: addressVal,
       latitude: lat.toString(),
       longitude: lng.toString(),
     );
-    await UserAddress.saveUserAddress(userAddressBean);
+    await UserAddress.saveUserAddress(userAddressBean!);
+    rebuildUi();
     appUserAddress.value = await UserAddress.getSavedUserAddress();
     appUserAddress.notifyListeners();
   }

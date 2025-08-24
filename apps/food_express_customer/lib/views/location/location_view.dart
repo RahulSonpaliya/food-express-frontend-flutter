@@ -86,7 +86,9 @@ class LocationView extends StackedView<LocationViewModel> {
               ),
               SizedBox(height: 30),
               ElevatedButton(
-                onPressed: viewModel.navigateToHome,
+                onPressed: viewModel.userAddressBean != null
+                    ? viewModel.navigateToHome
+                    : null,
                 child: Text('Save'),
               )
             ],
