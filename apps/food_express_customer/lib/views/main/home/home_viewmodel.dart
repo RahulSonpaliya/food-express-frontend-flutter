@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:food_express_customer/views/main/home/category_detail_view/category_detail_view.dart';
 import 'package:shared/common_utils.dart';
 import 'package:shared/location_utils.dart';
 import 'package:stacked/stacked.dart';
@@ -74,7 +75,10 @@ class HomeViewModel extends BaseViewModel {
 
   onCategoryClick(Category category) {
     if (category.id != -1) {
-      // TODO: implement
+      _navigationService.navigateWithTransition(
+        CategoryDetailView(categoryList: categoryList, category: category),
+        transitionStyle: Transition.rightToLeft,
+      );
     }
   }
 

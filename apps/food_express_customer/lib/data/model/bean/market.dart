@@ -6,7 +6,7 @@ class Market {
   final String status;
   final String openTime;
   final String closeTime;
-  final num rating;
+  final num? rating;
   final num latitude;
   final num longitude;
 

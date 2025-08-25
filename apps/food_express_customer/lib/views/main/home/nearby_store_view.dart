@@ -139,9 +139,8 @@ class NearbyStoreView extends ViewModelWidget<HomeViewModel> {
                 SizedBox(height: 3),
                 StoreDistanceWidget(market: market),
                 SizedBox(height: 8),
-                market.rating > 0
-                    ? StarRatingView(rating: market.rating.toDouble())
-                    : SizedBox.shrink(),
+                if (market.rating != null)
+                  StarRatingView(rating: market.rating?.toDouble() ?? 0),
                 SizedBox(height: 5),
               ],
             ),
