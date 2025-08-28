@@ -8,6 +8,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../../data/model/bean/category.dart';
 import '../../../../data/model/bean/market.dart';
+import '../../../../data/remote/repository.dart';
 import 'category_detail_viewmodel.dart';
 
 class CategoryDetailView extends StatelessWidget {
@@ -38,7 +39,7 @@ class CategoryDetailView extends StatelessWidget {
                       style: TSB.semiBoldMedium(textColor: Colors.white),
                     ),
                     background: CachedNetworkImage(
-                      imageUrl: category.image,
+                      imageUrl: CATEGORY_ICON_URL + category.image,
                       fit: BoxFit.cover,
                       placeholder: (_, url) => Image.asset(
                         AppImages.defaultImage,
@@ -173,6 +174,8 @@ class CategoryDetailView extends StatelessWidget {
                   AppImages.defaultImage,
                   fit: BoxFit.cover,
                 ),
+                errorWidget: (context, url, error) =>
+                    Image.asset(AppImages.defaultImage),
               ),
             ),
           ),
@@ -217,7 +220,7 @@ class CategoryDetailView extends StatelessWidget {
                   ),
                   if (market.rating != null)
                     SizedBox(
-                      width: 55,
+                      width: 60,
                       child: StarRatingView(
                         rating: market.rating?.toDouble() ?? 0,
                       ),
