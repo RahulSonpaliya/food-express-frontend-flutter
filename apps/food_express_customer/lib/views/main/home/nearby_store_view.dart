@@ -86,7 +86,7 @@ class NearbyStoreView extends ViewModelWidget<HomeViewModel> {
         separatorBuilder: (_, i) => SizedBox(height: 10),
         itemBuilder: (context, index) {
           return InkWell(
-              child: _buildVerticalList(model.marketList[index]),
+              child: _buildVerticalList(model.marketList[index], model),
               onTap: () =>
                   model.nearByStoreListItemClick(model.marketList[index]));
         },
@@ -94,7 +94,7 @@ class NearbyStoreView extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  _buildVerticalList(Market market) {
+  _buildVerticalList(Market market, HomeViewModel model) {
     return Container(
       alignment: Alignment.topCenter,
       child: Row(
@@ -137,7 +137,10 @@ class NearbyStoreView extends ViewModelWidget<HomeViewModel> {
                   style: TSB.regularSmall(textColor: black_text_color),
                 ),
                 SizedBox(height: 3),
-                StoreDistanceWidget(market: market),
+                StoreDistanceWidget(
+                  market: market,
+                  calculateDistance: model.calculateDistance(market),
+                ),
                 SizedBox(height: 8),
                 if (market.rating != null)
                   StarRatingView(rating: market.rating?.toDouble() ?? 0),

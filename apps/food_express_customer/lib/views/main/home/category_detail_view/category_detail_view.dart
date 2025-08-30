@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 import '../../../../data/model/bean/category.dart';
 import '../../../../data/model/bean/market.dart';
 import '../../../../data/remote/repository.dart';
+import '../store_distance_widget.dart';
 import 'category_detail_viewmodel.dart';
 
 class CategoryDetailView extends StatelessWidget {
@@ -146,7 +147,7 @@ class CategoryDetailView extends StatelessWidget {
         return Material(
           color: colorWhite,
           child: InkWell(
-            child: _buildVerticalList(model.marketList[index]),
+            child: _buildVerticalList(model.marketList[index], model),
             onTap: () =>
                 model.nearByStoreListItemClick(model.marketList[index]),
           ),
@@ -155,7 +156,7 @@ class CategoryDetailView extends StatelessWidget {
     );
   }
 
-  _buildVerticalList(Market market) {
+  _buildVerticalList(Market market, CategoryDetailViewModel model) {
     return Container(
       alignment: Alignment.topCenter,
       child: Row(
@@ -210,11 +211,10 @@ class CategoryDetailView extends StatelessWidget {
                   SizedBox(
                     height: 3,
                   ),
-                  // TODO add distance
-                  // Text(
-                  //   '${market?.distanceInMiles ?? ''}',
-                  //   style: TSB.semiBoldSmall(textColor: black_text_color),
-                  // ),
+                  StoreDistanceWidget(
+                    market: market,
+                    calculateDistance: model.calculateDistance(market),
+                  ),
                   SizedBox(
                     height: 8,
                   ),

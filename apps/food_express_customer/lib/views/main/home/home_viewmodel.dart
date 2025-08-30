@@ -1,21 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:food_express_customer/views/main/home/category_detail_view/category_detail_view.dart';
 import 'package:shared/common_utils.dart';
-import 'package:shared/location_utils.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/locator.dart';
 import '../../../data/model/bean/category.dart';
 import '../../../data/model/bean/market.dart';
-import '../../../data/model/bean/user_address.dart';
 import '../../../data/remote/repository.dart';
 import '../../location/location_view.dart';
+import 'user_address_mixin.dart';
 
-class HomeViewModel extends BaseViewModel {
-  String longitude = '';
-  String latitude = '';
-  String address = '';
+class HomeViewModel extends BaseViewModel with UserAddressMixin {
   List<Category> _categoryList = List.empty(growable: true);
   List<Category> get categoryList => _categoryList;
   List<Market> _marketList = List.empty(growable: true);
@@ -29,17 +25,10 @@ class HomeViewModel extends BaseViewModel {
   void _getHomeDetails() async {
     setBusyForObject(_marketList, true);
     setBusyForObject(_categoryList, true);
-    await _getUserLocation();
+    await getUserAddress();
     _getAllMarkets();
     _getAllCategory();
     notifyListeners();
-  }
-
-  _getUserLocation() async {
-    UserAddress userAddressBean = await UserAddress.getSavedUserAddress();
-    address = userAddressBean.address;
-    latitude = userAddressBean.latitude;
-    longitude = userAddressBean.longitude;
   }
 
   editIconTap() {
@@ -103,16 +92,5 @@ class HomeViewModel extends BaseViewModel {
 
   nearByStoreListItemClick(Market market) {
     // TODO: implement
-  }
-
-  Future<String> calculateDistance(Market market) async {
-    final distanceInMeters = LocationUtils.getDistanceBetween2LatLng(
-        double.parse(latitude),
-        double.parse(longitude),
-        market.latitude.toDouble(),
-        market.longitude.toDouble());
-    double roundDistanceInMeters =
-        double.parse((distanceInMeters).toStringAsFixed(0));
-    return '$roundDistanceInMeters Meters';
   }
 }

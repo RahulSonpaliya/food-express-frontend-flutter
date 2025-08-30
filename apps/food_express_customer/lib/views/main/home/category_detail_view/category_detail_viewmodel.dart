@@ -6,10 +6,10 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../data/model/bean/category.dart';
 import '../../../../data/model/bean/market.dart';
-import '../../../../data/model/bean/user_address.dart';
 import '../../../../data/remote/repository.dart';
+import '../user_address_mixin.dart';
 
-class CategoryDetailViewModel extends BaseViewModel {
+class CategoryDetailViewModel extends BaseViewModel with UserAddressMixin {
   List<Category> categoryList;
   Category category;
   List<Market> _marketList = List.empty(growable: true);
@@ -21,11 +21,11 @@ class CategoryDetailViewModel extends BaseViewModel {
   }
 
   _getMarketsByCategory() async {
-    UserAddress userAddress = await UserAddress.getSavedUserAddress();
     setBusyForObject(_marketList, true);
+    await getUserAddress();
     var result = await locator<Repository>().getNearbyMarkets(requestBody: {
-      "latitude": userAddress.latitude,
-      "longitude": userAddress.longitude,
+      "latitude": latitude,
+      "longitude": longitude,
       "categoryId": category.id.toString(),
     });
     setBusyForObject(_marketList, false);

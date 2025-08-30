@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:food_express_customer/views/main/home/home_viewmodel.dart';
 import 'package:shared/colors.dart';
 import 'package:shared/text_styles.dart';
-import 'package:stacked/stacked.dart';
 
 import '../../../data/model/bean/market.dart';
 
-class StoreDistanceWidget extends ViewModelWidget<HomeViewModel> {
+class StoreDistanceWidget extends StatelessWidget {
   final Market market;
-  const StoreDistanceWidget({super.key, required this.market});
+  final Future<String> calculateDistance;
+  const StoreDistanceWidget({
+    super.key,
+    required this.market,
+    required this.calculateDistance,
+  });
 
   @override
-  Widget build(BuildContext context, HomeViewModel viewModel) {
+  Widget build(BuildContext context) {
     return FutureBuilder<String>(
-      future: viewModel.calculateDistance(market),
+      future: calculateDistance,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Text(
