@@ -31,10 +31,12 @@ class Product {
       market_id: parsedJson['market_id'],
       description: parsedJson['description'],
     );
-    var optionsJsonArray = parsedJson['product_option'] as List;
-    List<ProductOption> optionsList =
-        optionsJsonArray.map((i) => ProductOption.fromJson(i)).toList();
-    p.options = optionsList;
+    if (parsedJson['product_option'] != null) {
+      var optionsJsonArray = parsedJson['product_option'] as List;
+      List<ProductOption> optionsList =
+          optionsJsonArray.map((i) => ProductOption.fromJson(i)).toList();
+      p.options = optionsList;
+    }
     return p;
   }
 

@@ -14,12 +14,11 @@ class MarketDetailResponse extends BaseResponse {
       message: message,
       success: success,
     );
-    var productsDataObj = parsedJson['data'];
-    var productsJsonArray = productsDataObj['products'] as List;
+    var productsJsonArray = parsedJson['products'] as List;
     List<Product> productsList =
         productsJsonArray.map((i) => Product.fromJson(i)).toList();
     res.products = productsList;
-    res.market = Market.fromJson(parsedJson['data']);
+    res.market = Market.fromJson(parsedJson['market']);
     return res;
   }
 }

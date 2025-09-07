@@ -19,7 +19,7 @@ const String RESET_PASSWORD_URL = BASE_URL + "/users/resetPassword";
 const String GET_ALL_CATEGORIES_URL = BASE_URL + "/categories/get";
 const String CATEGORY_ICON_URL = BASE_URL + "/categories/download/";
 const String NEARBY_MARKETS_URL = BASE_URL + "/markets/nearby";
-const String ALL_MARKETS_URL = BASE_URL + "/markets";
+const String MARKET_DETAIL_URL = BASE_URL + "/markets/detail";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -104,10 +104,7 @@ class Network extends Repository {
   @override
   Future<Either<Failure, MarketDetailResponse>> getMarketDetail(num marketId,
       {num categoryId = -1}) async {
-    var url = '$ALL_MARKETS_URL/$marketId';
-    if (categoryId != -1) {
-      url = '$ALL_MARKETS_URL/$marketId?category_id=$categoryId';
-    }
+    var url = '$MARKET_DETAIL_URL/$marketId?category_id=$categoryId';
     return await callGetAPI(url, HEADER, parseMarketDetailResponse);
   }
 }
