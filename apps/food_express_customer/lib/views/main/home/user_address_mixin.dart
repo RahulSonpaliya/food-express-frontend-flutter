@@ -16,6 +16,9 @@ mixin UserAddressMixin {
   }
 
   Future<String> calculateDistance(Market market) async {
+    if (longitude.isEmpty && latitude.isEmpty && address.isEmpty) {
+      await getUserAddress();
+    }
     final distanceInMeters = LocationUtils.getDistanceBetween2LatLng(
         double.parse(latitude),
         double.parse(longitude),
