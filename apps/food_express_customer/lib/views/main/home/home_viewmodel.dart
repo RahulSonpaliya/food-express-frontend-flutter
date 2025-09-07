@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:food_express_customer/views/main/home/category_detail_view/category_detail_view.dart';
+import 'package:food_express_customer/views/main/home/market_detail/market_detail_view.dart';
 import 'package:shared/common_utils.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -91,6 +92,9 @@ class HomeViewModel extends BaseViewModel with UserAddressMixin {
   }
 
   nearByStoreListItemClick(Market market) {
-    // TODO: implement
+    _navigationService.navigateWithTransition(
+      MarketDetailView(categoryList: categoryList, market: market),
+      transitionStyle: Transition.rightToLeft,
+    );
   }
 }
