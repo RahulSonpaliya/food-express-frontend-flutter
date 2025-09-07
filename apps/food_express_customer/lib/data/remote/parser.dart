@@ -4,6 +4,7 @@ import 'package:food_express_customer/data/model/api_response/base_response.dart
 
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/login_response.dart';
+import '../model/api_response/market_detail_response.dart';
 import '../model/api_response/nearby_markets_response.dart';
 import '../model/api_response/register_response.dart';
 
@@ -27,4 +28,9 @@ Future<AllCategoryResponse> parseAllCategoryResponse(
 Future<NearbyMarketResponse> parseNearbyMarketResponse(
     String responseBody) async {
   return NearbyMarketResponse.fromJson(json.decode(responseBody));
+}
+
+Future<MarketDetailResponse> parseMarketDetailResponse(
+    String responseBody) async {
+  return MarketDetailResponse.fromJson(json.decode(responseBody));
 }

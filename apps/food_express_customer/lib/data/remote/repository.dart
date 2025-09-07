@@ -6,6 +6,7 @@ import 'package:shared/data/remote/failure.dart';
 
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/login_response.dart';
+import '../model/api_response/market_detail_response.dart';
 import '../model/api_response/register_response.dart';
 import 'parser.dart';
 
@@ -18,6 +19,7 @@ const String RESET_PASSWORD_URL = BASE_URL + "/users/resetPassword";
 const String GET_ALL_CATEGORIES_URL = BASE_URL + "/categories/get";
 const String CATEGORY_ICON_URL = BASE_URL + "/categories/download/";
 const String NEARBY_MARKETS_URL = BASE_URL + "/markets/nearby";
+const String ALL_MARKETS_URL = BASE_URL + "/markets";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -41,6 +43,9 @@ abstract class Repository {
 
   Future<Either<Failure, NearbyMarketResponse>> getNearbyMarkets(
       {required Map<String, String> requestBody});
+
+  Future<Either<Failure, MarketDetailResponse>> getMarketDetail(num marketId,
+      {num categoryId = -1});
 }
 
 class Network extends Repository {
@@ -94,5 +99,15 @@ class Network extends Repository {
       parseNearbyMarketResponse,
       body: requestBody,
     );
+  }
+
+  @override
+  Future<Either<Failure, MarketDetailResponse>> getMarketDetail(num marketId,
+      {num categoryId = -1}) async {
+    var url = '$ALL_MARKETS_URL/$marketId';
+    if (categoryId != -1) {
+      url = '$ALL_MARKETS_URL/$marketId?category_id=$categoryId';
+    }
+    return await callGetAPI(url, HEADER, parseMarketDetailResponse);
   }
 }
