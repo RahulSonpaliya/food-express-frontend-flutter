@@ -54,7 +54,7 @@ class _ProductListViewState extends State<ProductListView>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CachedNetworkImage(
-                                  imageUrl: p.image,
+                                  imageUrl: p.image ?? '',
                                   fit: BoxFit.cover,
                                   placeholder: (_, url) => Image.asset(
                                     AppImages.defaultImage,
@@ -80,25 +80,22 @@ class _ProductListViewState extends State<ProductListView>
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      p.options.isNotEmpty
-                                          ? Container(
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    p.options[0].variant_name,
-                                                    style: TSB.regularSmall(
-                                                        textColor:
-                                                            theme_text_hint_color),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : Container(),
+                                      if (p.options?.isNotEmpty ?? false)
+                                        Column(
+                                          children: [
+                                            Text(
+                                              p.options![0].variant_name,
+                                              style: TSB.regularSmall(
+                                                  textColor:
+                                                      theme_text_hint_color),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                          ],
+                                        ),
                                       Text(
-                                        '\$${p.options.isEmpty ? p.price.toStringAsFixed(2) : p.options[0].price.toStringAsFixed(2)}',
+                                        '\$${(p.options?.isEmpty ?? true) ? p.price.toStringAsFixed(2) : p.options![0].price.toStringAsFixed(2)}',
                                         style: TSB.semiBoldSmall(
                                             textColor: theme_blue_color_1),
                                       ),
