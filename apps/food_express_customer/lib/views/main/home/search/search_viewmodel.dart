@@ -1,5 +1,6 @@
 import 'package:food_express_customer/views/main/home/user_address_mixin.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared/common_utils.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -7,6 +8,7 @@ import '../../../../app/locator.dart';
 import '../../../../data/model/bean/category.dart';
 import '../../../../data/model/bean/market.dart';
 import '../../../../data/model/bean/product.dart';
+import '../../../../data/remote/repository.dart';
 
 class SearchViewModel extends BaseViewModel with UserAddressMixin {
   final List<Category> categoryList;
@@ -63,15 +65,15 @@ class SearchViewModel extends BaseViewModel with UserAddressMixin {
   }
 
   searchProductItemClick(Product p) async {
-    // TODO implement getMarketDetail api
-    // showLoading();
-    // var result = await locator<Repository>().getMarketDetail(p.market_id);
-    // await hideLoading();
-    // result.fold((failure) => showRetryDialog(failure: failure), (r) {
-    //   // TODO product detail view
-    //   // _navigationService.navigateWithTransition(ProductDetailView(r.market, p),
-    //   //     transition: NavigationTransition.RightToLeft);
-    // });
+    // TODO test implementation
+    showLoading();
+    var result = await locator<Repository>().getMarketDetail(p.market_id ?? 0);
+    await hideLoading();
+    result.fold((failure) => showRetryDialog(failure: failure), (r) {
+      // TODO product detail view
+      // _navigationService.navigateWithTransition(ProductDetailView(r.market, p),
+      //     transition: NavigationTransition.RightToLeft);
+    });
   }
 
   searchStoreItemClick(Market userProfileList) {

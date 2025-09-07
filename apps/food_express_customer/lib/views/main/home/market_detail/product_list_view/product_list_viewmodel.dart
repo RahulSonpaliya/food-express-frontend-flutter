@@ -1,3 +1,4 @@
+import 'package:shared/common_utils.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -5,6 +6,7 @@ import '../../../../../app/locator.dart';
 import '../../../../../data/model/bean/category.dart';
 import '../../../../../data/model/bean/market.dart';
 import '../../../../../data/model/bean/product.dart';
+import '../../../../../data/remote/repository.dart';
 
 class ProductListViewModel extends BaseViewModel {
   var _dialogService = locator.get<DialogService>();
@@ -14,20 +16,23 @@ class ProductListViewModel extends BaseViewModel {
     _getProducts();
   }
 
-  final List<Product> _productList = List.empty(growable: true);
+  List<Product> _productList = List.empty(growable: true);
   List<Product> get productList => _productList;
 
   _getProducts() async {
-    // TODO implement getMarketDetail api
-    // setBusyForObject(_productList, true);
-    // var result = await locator
-    //     .get<Repository>()
-    //     .getMarketDetail(market.id, categoryId: category.id);
-    // setBusyForObject(_productList, false);
-    // result.fold((failure) => showRetryDialog(failure: failure), (r) {
-    //   _productList = r.products;
-    //   notifyListeners();
-    // });
+    // TODO test implementation
+    setBusyForObject(_productList, true);
+    var result = await locator
+        .get<Repository>()
+        .getMarketDetail(market.id, categoryId: category.id);
+    setBusyForObject(_productList, false);
+    result.fold(
+      (failure) => showRetryDialog(failure: failure),
+      (r) {
+        _productList = r.products;
+        notifyListeners();
+      },
+    );
   }
 
   // TODO implement all
