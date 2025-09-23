@@ -1,12 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:food_express_customer/data/model/api_response/base_response.dart';
 import 'package:food_express_customer/data/model/api_response/nearby_markets_response.dart';
+import 'package:food_express_customer/data/model/bean/user.dart';
 import 'package:shared/api_utils.dart';
 import 'package:shared/data/remote/failure.dart';
 
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/login_response.dart';
 import '../model/api_response/market_detail_response.dart';
+import '../model/api_response/product_detail_response.dart';
 import '../model/api_response/register_response.dart';
 import 'parser.dart';
 
@@ -20,10 +22,18 @@ const String GET_ALL_CATEGORIES_URL = BASE_URL + "/categories/get";
 const String CATEGORY_ICON_URL = BASE_URL + "/categories/download/";
 const String NEARBY_MARKETS_URL = BASE_URL + "/markets/nearby";
 const String MARKET_DETAIL_URL = BASE_URL + "/markets/detail";
+const String PRODUCT_DETAIL_URL = BASE_URL + "/products/detail";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
 abstract class Repository {
+  Future<Map> getHeaderForAuthUser() async {
+    return {
+      'Content-Type': 'application/json',
+      "USER_ID": (await User.getSavedUser()).id,
+    };
+  }
+
   Future<Either<Failure, LogInResponse>> logIn(
       {required Map<String, String> requestBody});
 
@@ -46,6 +56,9 @@ abstract class Repository {
 
   Future<Either<Failure, MarketDetailResponse>> getMarketDetail(num marketId,
       {num categoryId = -1});
+
+  Future<Either<Failure, ProductDetailResponse>> getProductDetail(
+      num productId);
 }
 
 class Network extends Repository {
@@ -106,5 +119,15 @@ class Network extends Repository {
       {num categoryId = -1}) async {
     var url = '$MARKET_DETAIL_URL/$marketId?category_id=$categoryId';
     return await callGetAPI(url, HEADER, parseMarketDetailResponse);
+  }
+
+  @override
+  Future<Either<Failure, ProductDetailResponse>> getProductDetail(
+      num productId) async {
+    return await callGetAPI(
+      '$PRODUCT_DETAIL_URL/$productId',
+      HEADER,
+      parseProductDetailResponse,
+    );
   }
 }

@@ -9,6 +9,7 @@ import '../../../../data/model/bean/category.dart';
 import '../../../../data/model/bean/market.dart';
 import '../../../../data/model/bean/product.dart';
 import '../../../../data/remote/repository.dart';
+import '../../product_detail/product_detail_view.dart';
 
 class SearchViewModel extends BaseViewModel with UserAddressMixin {
   final List<Category> categoryList;
@@ -70,9 +71,9 @@ class SearchViewModel extends BaseViewModel with UserAddressMixin {
     var result = await locator<Repository>().getMarketDetail(p.market_id ?? 0);
     await hideLoading();
     result.fold((failure) => showRetryDialog(failure: failure), (r) {
-      // TODO product detail view
-      // _navigationService.navigateWithTransition(ProductDetailView(r.market, p),
-      //     transition: NavigationTransition.RightToLeft);
+      _navigationService.navigateWithTransition(
+          ProductDetailView(market: r.market!, product: p),
+          transitionStyle: Transition.rightToLeft);
     });
   }
 

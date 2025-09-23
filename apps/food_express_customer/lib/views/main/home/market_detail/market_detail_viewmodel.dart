@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/locator.dart';
 import '../../../../data/model/bean/market.dart';
 import '../../../../data/model/bean/product.dart';
+import '../../product_detail/product_detail_view.dart';
 
 class MarketDetailViewModel extends BaseViewModel with UserAddressMixin {
   final Market market;
@@ -21,7 +22,8 @@ class MarketDetailViewModel extends BaseViewModel with UserAddressMixin {
   }
 
   navigateToProductDetail(Market market, Product product) {
-    // TODO implement
-    // _navigationService.navigateWithTransition(ProductDetailView(market, product), transition: NavigationTransition.RightToLeft);
+    _navigationService.navigateWithTransition(
+        ProductDetailView(market: market, product: product),
+        transitionStyle: Transition.rightToLeft);
   }
 }

@@ -6,6 +6,7 @@ import '../model/api_response/all_category_response.dart';
 import '../model/api_response/login_response.dart';
 import '../model/api_response/market_detail_response.dart';
 import '../model/api_response/nearby_markets_response.dart';
+import '../model/api_response/product_detail_response.dart';
 import '../model/api_response/register_response.dart';
 
 Future<LogInResponse> parseLogInResponse(String responseBody) async {
@@ -33,4 +34,9 @@ Future<NearbyMarketResponse> parseNearbyMarketResponse(
 Future<MarketDetailResponse> parseMarketDetailResponse(
     String responseBody) async {
   return MarketDetailResponse.fromJson(json.decode(responseBody));
+}
+
+Future<ProductDetailResponse> parseProductDetailResponse(
+    String responseBody) async {
+  return ProductDetailResponse.fromJson(json.decode(responseBody));
 }
