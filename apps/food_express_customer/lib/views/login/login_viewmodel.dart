@@ -57,6 +57,8 @@ class LogInViewModel extends BaseViewModel {
       (response) async {
         if (response.otpVerified) {
           await User.saveUser(response.user!);
+          User userBean = await User.getSavedUser();
+          appUser.value = userBean;
         }
         showDialog(response.message, okBtnClick: () {
           if (response.otpVerified) {
