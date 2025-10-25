@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/app_images.dart';
 import 'package:shared/colors.dart';
+import 'package:shared/plus_minus_btn.dart';
 import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../../data/model/bean/category.dart';
 import '../../../../../data/model/bean/market.dart';
+import '../../../../../data/model/bean/order.dart';
 import 'product_list_viewmodel.dart';
 
 class ProductListView extends StatefulWidget {
@@ -105,17 +107,16 @@ class _ProductListViewState extends State<ProductListView>
                               ],
                             ),
                           ),
-                          // TODO implement
-                          // ValueListenableBuilder(
-                          //     valueListenable: appOrderFromServer,
-                          //     builder: (_, Order order, child) {
-                          //       return PlusMinusBtn(
-                          //         plusClick: () => model.plusClick(p),
-                          //         minusClick: () => model.minusClick(p),
-                          //         showMinus: model.showMinus(p),
-                          //         qty: model.getQty(p),
-                          //       );
-                          //     })
+                          ValueListenableBuilder(
+                              valueListenable: appOrderFromServer,
+                              builder: (_, Order? order, child) {
+                                return PlusMinusBtn(
+                                  plusClick: () => model.plusClick(p),
+                                  minusClick: () => model.minusClick(p),
+                                  showMinus: model.showMinus(p),
+                                  qty: model.getQty(p),
+                                );
+                              })
                         ],
                       ),
                     ),
