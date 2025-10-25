@@ -93,46 +93,48 @@ class ProductDetailViewModel extends BaseViewModel {
   }
 
   _callUpdateCartApiNew(Cart cart, {bool decreaseQty = false}) async {
-    // TODO
-    // CartItem cartItem2 = CartItem(
-    //     qty: decreaseQty ? cart.cartItem.qty - 1 : cart.cartItem.qty + 1,
-    //     product: cart.cartItem.product,
-    //     option: cart.cartItem.option);
-    // showLoading();
-    // var result = await locator<Repository>().updateCart(cart.id,
-    //     requestBody: json.encode(cartItem2.toJson(qtyOnly: true)));
-    // await hideLoading();
-    // result.fold((failure) => showRetryDialog(failure: failure), (res) {
-    //   decreaseQty ? cart.cartItem.qty-- : cart.cartItem.qty++;
-    //   _updateCartTotal();
-    //   notifyListeners();
-    // });
+    CartItem cartItem2 = CartItem(
+        qty: decreaseQty ? cart.cartItem.qty - 1 : cart.cartItem.qty + 1,
+        product: cart.cartItem.product,
+        option: cart.cartItem.option);
+    showLoading();
+    var result = await locator
+        .get<Repository>()
+        .updateCart(cart.id, requestBody: cartItem2.toJson());
+    await hideLoading();
+    result.fold((failure) => showRetryDialog(failure: failure), (res) {
+      decreaseQty ? cart.cartItem.qty-- : cart.cartItem.qty++;
+      if (cart.cartItem.qty == 0) {
+        appOrderFromServer.value?.carts.remove(cart);
+      }
+      _updateCartTotal();
+      notifyListeners();
+    });
   }
 
   _callAddCartApiNew() async {
-    // TODO
-    // var cartItem =
-    //     CartItem(qty: 1, product: _productDetail, option: _selectedOption);
-    // showLoading();
-    // var result = await locator<Repository>()
-    //     .addToCart(requestBody: _getRequestForAddCart(cartItem));
-    // await hideLoading();
-    // result.fold((failure) => showRetryDialog(failure: failure), (res) {
-    //   var cart = Cart(id: res.id, cartItem: cartItem);
-    //   var order;
-    //   if (appOrderFromServer.value == null) {
-    //     order = Order(market: market);
-    //     order.market = market;
-    //     order.carts.add(cart);
-    //     appOrderFromServer.value = order;
-    //   } else {
-    //     order = appOrderFromServer.value;
-    //     order.market = market;
-    //     order.carts.add(cart);
-    //   }
-    //   _updateCartTotal();
-    //   notifyListeners();
-    // });
+    var cartItem =
+        CartItem(qty: 1, product: _productDetail, option: _selectedOption);
+    showLoading();
+    var result = await locator<Repository>()
+        .addToCart(requestBody: _getRequestForAddCart(cartItem));
+    await hideLoading();
+    result.fold((failure) => showRetryDialog(failure: failure), (res) {
+      var cart = Cart(id: res.cartId, cartItem: cartItem);
+      var order;
+      if (appOrderFromServer.value == null) {
+        order = Order(market: market);
+        order.market = market;
+        order.carts.add(cart);
+        appOrderFromServer.value = order;
+      } else {
+        order = appOrderFromServer.value;
+        order.market = market;
+        order.carts.add(cart);
+      }
+      _updateCartTotal();
+      notifyListeners();
+    });
   }
 
   _isSameMarket() {
@@ -149,40 +151,21 @@ class ProductDetailViewModel extends BaseViewModel {
   }
 
   _resetCartApi() async {
-    // TODO
-    // showLoading();
-    // var result = await locator<Repository>().clearCart();
-    // await hideLoading();
-    // result.fold((failure) => showRetryDialog(failure: failure), (response) {
-    //   appOrderFromServer.value = null;
-    //   appOrderFromServer.notifyListeners();
-    //   showDialog(response.message);
-    // });
+    showLoading();
+    var result = await locator.get<Repository>().clearCart();
+    await hideLoading();
+    result.fold((failure) => showRetryDialog(failure: failure), (response) {
+      appOrderFromServer.value = null;
+      appOrderFromServer.notifyListeners();
+      showDialog(response.message);
+    });
   }
 
   minusClick() async {
     var cart = _checkIfProductAlreadyAdded(_productDetail);
     if (cart != null) {
-      //this product is already existed in cart, now increase its quantity by 1 and call update-cart api
-      if (cart.cartItem.qty > 1) {
-        _callUpdateCartApiNew(cart, decreaseQty: true);
-      } else {
-        //if quantity is 1 than delete this cart
-        _callDeleteCartApi(cart);
-      }
+      _callUpdateCartApiNew(cart, decreaseQty: true);
     }
-  }
-
-  _callDeleteCartApi(Cart cart) async {
-    // TODO
-    // showLoading();
-    // var result = await locator<Repository>().deleteCart(cart.id);
-    // await hideLoading();
-    // result.fold((failure) => showRetryDialog(failure: failure), (res) {
-    //   appOrderFromServer.value?.carts.remove(cart);
-    //   _updateCartTotal();
-    //   notifyListeners();
-    // });
   }
 
   Cart? _checkIfProductAlreadyAdded(Product p1) {
