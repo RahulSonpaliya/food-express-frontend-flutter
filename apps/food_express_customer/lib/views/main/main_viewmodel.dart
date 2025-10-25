@@ -1,3 +1,4 @@
+import 'package:food_express_customer/data/remote/repository.dart';
 import 'package:food_express_customer/views/login/login_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,6 +12,7 @@ class MainViewModel extends BaseViewModel {
   int get tabIndex => _tabIndex;
 
   MainViewModel() {
+    locator<Repository>().updateHeader();
     if (appUser.value != null) {
       _getCartData();
     }
