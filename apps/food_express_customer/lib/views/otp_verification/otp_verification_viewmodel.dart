@@ -40,10 +40,10 @@ class OtpVerificationViewModel extends BaseViewModel {
 
   Map<String, String> _getRequestForVerifyOtp() {
     Map<String, String> request = {};
-    request['countryCode'] = countryCode;
-    request['phoneNumber'] = mobileNum;
+    request['country_code'] = countryCode;
+    request['phone_number'] = mobileNum;
     request['otp'] = otp;
-    request['accountType'] = acTypeCustomer;
+    request['account_type'] = acTypeCustomer;
     return request;
   }
 
@@ -61,9 +61,9 @@ class OtpVerificationViewModel extends BaseViewModel {
 
   Map<String, String> _getRequestForResendOtp() {
     Map<String, String> request = {};
-    request['countryCode'] = countryCode;
-    request['phoneNumber'] = mobileNum;
-    request['accountType'] = acTypeCustomer;
+    request['country_code'] = countryCode;
+    request['phone_number'] = mobileNum;
+    request['account_type'] = acTypeCustomer;
     return request;
   }
 }

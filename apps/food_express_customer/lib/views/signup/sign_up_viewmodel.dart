@@ -79,13 +79,13 @@ class SignUpViewModel extends BaseViewModel {
 
   Map<String, String> _getRequestForSignUp() {
     Map<String, String> request = {};
-    request['countryCode'] = _selectedCCode;
-    request['phoneNumber'] = mobile;
+    request['country_code'] = _selectedCCode;
+    request['phone_number'] = mobile;
     request['name'] = name;
-    request['emailId'] = email;
+    request['email_id'] = email;
     request['password'] = password;
-    request['confirmPassword'] = confirmPassword;
-    request['accountType'] = acTypeCustomer;
+    request['confirm_password'] = confirmPassword;
+    request['account_type'] = acTypeCustomer;
     return request;
   }
 }
