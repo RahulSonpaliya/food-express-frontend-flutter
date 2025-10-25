@@ -36,8 +36,8 @@ class Category {
       image: parsedJson['image'],
       description: parsedJson['description'],
       status: parsedJson['status'],
-      createdAt: parsedJson['createdAt'],
-      updatedAt: parsedJson['updatedAt'],
+      createdAt: parsedJson['created_at'],
+      updatedAt: parsedJson['updated_at'],
     );
   }
 }

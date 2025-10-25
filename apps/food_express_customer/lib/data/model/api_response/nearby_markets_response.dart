@@ -11,7 +11,7 @@ class NearbyMarketResponse extends BaseResponse {
     final success = parsedJson['success'] ?? false;
     NearbyMarketResponse nearbyMarketResponse =
         NearbyMarketResponse(message: message, success: success);
-    var marketList = parsedJson["marketList"] as List;
+    var marketList = parsedJson["market_list"] as List;
     nearbyMarketResponse.marketList =
         marketList.map((e) => Market.fromJson(e)).toList(growable: true);
     return nearbyMarketResponse;

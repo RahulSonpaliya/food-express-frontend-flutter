@@ -11,7 +11,7 @@ class AllCategoryResponse extends BaseResponse {
     final success = parsedJson['success'] ?? false;
     AllCategoryResponse allCategoryResponse =
         AllCategoryResponse(message: message, success: success);
-    var catList = parsedJson["categoryList"] as List;
+    var catList = parsedJson["category_list"] as List;
     allCategoryResponse.categoryList =
         catList.map((e) => Category.fromJson(e)).toList(growable: true);
     return allCategoryResponse;
