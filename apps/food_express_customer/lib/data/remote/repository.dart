@@ -5,7 +5,9 @@ import 'package:food_express_customer/data/model/bean/user.dart';
 import 'package:shared/api_utils.dart';
 import 'package:shared/data/remote/failure.dart';
 
+import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
+import '../model/api_response/get_cart_response.dart';
 import '../model/api_response/login_response.dart';
 import '../model/api_response/market_detail_response.dart';
 import '../model/api_response/product_detail_response.dart';
@@ -23,6 +25,11 @@ const String CATEGORY_ICON_URL = BASE_URL + "/categories/download/";
 const String NEARBY_MARKETS_URL = BASE_URL + "/markets/nearby";
 const String MARKET_DETAIL_URL = BASE_URL + "/markets/detail";
 const String PRODUCT_DETAIL_URL = BASE_URL + "/products/detail";
+const String ADD_TO_CART_URL = BASE_URL + "/cart/add";
+const String UPDATE_CART_URL = BASE_URL + "/cart/update";
+const String DELETE_CART_URL = BASE_URL + "/cart/delete";
+const String GET_CART_URL = BASE_URL + "/cart/get";
+const String CLEAR_CART_URL = BASE_URL + "/cart/clear";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -32,6 +39,17 @@ abstract class Repository {
       'Content-Type': 'application/json',
       "User-Id": (await User.getSavedUser()).id,
     };
+  }
+
+  updateHeader({bool reset = false}) async {
+    if (reset) {
+      HEADER = {'Content-Type': 'application/json'};
+    } else {
+      HEADER = {
+        'Content-Type': 'application/json',
+        "User-Id": (await User.getSavedUser()).id.toString(),
+      };
+    }
   }
 
   Future<Either<Failure, LogInResponse>> logIn(
@@ -59,6 +77,16 @@ abstract class Repository {
 
   Future<Either<Failure, ProductDetailResponse>> getProductDetail(
       num productId);
+
+  Future<Either<Failure, AddCartResponse>> addToCart({required requestBody});
+
+  Future<Either<Failure, BaseResponse>> updateCart(num cartId,
+      {required requestBody});
+
+  Future<Either<Failure, BaseResponse>> deleteCart(num cartId);
+
+  Future<Either<Failure, GetCartResponse>> getCart();
+  Future<Either<Failure, BaseResponse>> clearCart();
 }
 
 class Network extends Repository {
@@ -129,5 +157,36 @@ class Network extends Repository {
       HEADER,
       parseProductDetailResponse,
     );
+  }
+
+  @override
+  Future<Either<Failure, AddCartResponse>> addToCart(
+      {required requestBody}) async {
+    return await callPostAPI(ADD_TO_CART_URL, HEADER, parseAddCartResponse,
+        body: requestBody);
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> deleteCart(num cartId) async {
+    return await callPostAPI(
+        '$DELETE_CART_URL/$cartId', HEADER, parseBaseResponse);
+  }
+
+  @override
+  Future<Either<Failure, GetCartResponse>> getCart() async {
+    return await callGetAPI(GET_CART_URL, HEADER, parseGetCartResponse);
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> updateCart(num cartId,
+      {required requestBody}) async {
+    return await callPostAPI(
+        '$UPDATE_CART_URL/$cartId', HEADER, parseBaseResponse,
+        body: requestBody);
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> clearCart() async {
+    return await callPostAPI(CLEAR_CART_URL, HEADER, parseBaseResponse);
   }
 }
