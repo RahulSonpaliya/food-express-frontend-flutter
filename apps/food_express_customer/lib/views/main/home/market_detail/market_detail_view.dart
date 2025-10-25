@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../../data/model/bean/category.dart';
 import '../../../../data/model/bean/market.dart';
+import '../../../../data/model/bean/order.dart';
 import 'market_detail_viewmodel.dart';
 import 'product_list_view/product_list_view.dart';
 
@@ -22,70 +23,69 @@ class MarketDetailView extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    // TODO add bottom sheet
     return ViewModelBuilder<MarketDetailViewModel>.reactive(
         builder: (_, model, child) {
           return Scaffold(
-              // bottomSheet: ValueListenableBuilder(
-              //   valueListenable: appOrderFromServer,
-              //   builder: (_, order, child) {
-              //     return Visibility(
-              //       child: Container(
-              //         color: theme_blue_color_1,
-              //         padding:
-              //             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              //         child: Row(
-              //           children: [
-              //             Row(
-              //               children: [
-              //                 Text(
-              //                   '\$${order?.total?.toStringAsFixed(2) ?? ''}',
-              //                   style:
-              //                       TSB.semiBoldLarge(textColor: Colors.white),
-              //                 ),
-              //                 Container(
-              //                   width: 1,
-              //                   height: 29,
-              //                   margin: EdgeInsets.only(left: 5, right: 5),
-              //                   color: Colors.white,
-              //                 ),
-              //                 Text(
-              //                   _getItemsCount(order),
-              //                   style:
-              //                       TSB.regularMedium(textColor: Colors.white),
-              //                 ),
-              //               ],
-              //             ),
-              //             MaterialButton(
-              //               onPressed: model.showViewCartBtn,
-              //               elevation: 0,
-              //               color: theme_blue_color_1,
-              //               disabledColor: Colors.grey,
-              //               height: 50,
-              //               child: Row(
-              //                 mainAxisAlignment: MainAxisAlignment.center,
-              //                 children: <Widget>[
-              //                   Text(
-              //                     'View Cart',
-              //                     style: TSB.semiBoldSmall(
-              //                         textColor: Colors.white),
-              //                   ),
-              //                   SizedBox(
-              //                     width: 5,
-              //                   ),
-              //                   Image.asset('assets/ic_get_started.png')
-              //                 ],
-              //               ),
-              //             )
-              //           ],
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         ),
-              //       ),
-              //       visible: (appOrderFromServer.value != null &&
-              //           appOrderFromServer.value.carts.isNotEmpty),
-              //     );
-              //   },
-              // ),
+              bottomSheet: ValueListenableBuilder(
+                valueListenable: appOrderFromServer,
+                builder: (_, order, child) {
+                  return Visibility(
+                    visible: (appOrderFromServer.value != null &&
+                        appOrderFromServer.value!.carts.isNotEmpty),
+                    child: Container(
+                      color: theme_blue_color_1,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '\$${order?.total?.toStringAsFixed(2) ?? ''}',
+                                style:
+                                    TSB.semiBoldLarge(textColor: Colors.white),
+                              ),
+                              Container(
+                                width: 1,
+                                height: 29,
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                color: Colors.white,
+                              ),
+                              Text(
+                                _getItemsCount(order),
+                                style:
+                                    TSB.regularMedium(textColor: Colors.white),
+                              ),
+                            ],
+                          ),
+                          MaterialButton(
+                            onPressed: model.showViewCartBtn,
+                            elevation: 0,
+                            color: theme_blue_color_1,
+                            disabledColor: Colors.grey,
+                            height: 50,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  'View Cart',
+                                  style: TSB.semiBoldSmall(
+                                      textColor: Colors.white),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                // Image.asset('assets/ic_get_started.png')
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
               body: DefaultTabController(
                   length: categoryList.length,
                   child: NestedScrollView(
@@ -150,13 +150,12 @@ class MarketDetailView extends StatelessWidget {
         viewModelBuilder: () => MarketDetailViewModel(market));
   }
 
-  // TODO implement
-  // _getItemsCount(Order order) {
-  //   if (order != null && order.carts != null) {
-  //     return '${order.carts.length} ${order.carts.length > 1 ? 'Items' : 'Item'}';
-  //   }
-  //   return '';
-  // }
+  _getItemsCount(Order? order) {
+    if (order != null && order.carts.isNotEmpty) {
+      return '${order.carts.length} ${order.carts.length > 1 ? 'Items' : 'Item'}';
+    }
+    return '';
+  }
 
   _content(MarketDetailViewModel model) {
     return Container(

@@ -343,7 +343,7 @@ class ProductDetailView extends StatelessWidget {
                             SizedBox(
                               width: 5,
                             ),
-                            Image.asset('assets/ic_get_started.png')
+                            // Image.asset('assets/ic_get_started.png')
                           ],
                         ),
                       )
