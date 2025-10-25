@@ -26,11 +26,11 @@ class User {
   Map<String, dynamic> toJson(User obj) {
     return <String, dynamic>{
       'id': obj.id,
-      'countryCode': obj.countryCode,
-      'phoneNumber': obj.phoneNumber,
+      'country_code': obj.countryCode,
+      'phone_number': obj.phoneNumber,
       'name': obj.name,
-      'emailId': obj.emailId,
-      'profileImage': obj.profileImage,
+      'email_id': obj.emailId,
+      'profile_image': obj.profileImage,
     };
   }
 
