@@ -37,11 +37,11 @@ class User {
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     return User(
       id: parsedJson['id'],
-      countryCode: parsedJson['countryCode'],
-      phoneNumber: parsedJson['phoneNumber'],
+      countryCode: parsedJson['country_code'],
+      phoneNumber: parsedJson['phone_number'],
       name: parsedJson['name'],
-      emailId: parsedJson['emailId'],
-      profileImage: parsedJson['profileImage'] ?? "",
+      emailId: parsedJson['email_id'],
+      profileImage: parsedJson['profile_image'] ?? "",
     );
   }
 

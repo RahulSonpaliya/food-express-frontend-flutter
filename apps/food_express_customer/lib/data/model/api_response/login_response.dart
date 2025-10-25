@@ -11,8 +11,8 @@ class LogInResponse extends BaseResponse {
     final message = parsedJson['message'] ?? '';
     final success = parsedJson['success'] ?? false;
     final response = LogInResponse(message: message, success: success);
-    response.otpVerified = parsedJson['otpVerified'];
-    response.userId = parsedJson['userId'];
+    response.otpVerified = parsedJson['otp_verified'];
+    response.userId = parsedJson['user_id'];
     if (response.otpVerified) {
       response.user = User.fromJson(parsedJson['user']);
     }

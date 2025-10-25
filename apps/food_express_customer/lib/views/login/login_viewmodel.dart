@@ -71,10 +71,10 @@ class LogInViewModel extends BaseViewModel {
 
   Map<String, String> _getRequestForLogIn() {
     Map<String, String> request = {};
-    request['countryCode'] = selectedCCode;
-    request['phoneNumber'] = mobile;
+    request['country_code'] = selectedCCode;
+    request['phone_number'] = mobile;
     request['password'] = password;
-    request['accountType'] = 'CUSTOMER';
+    request['account_type'] = 'CUSTOMER';
     return request;
   }
 
