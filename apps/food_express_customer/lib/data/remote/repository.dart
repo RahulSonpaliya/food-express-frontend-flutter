@@ -30,7 +30,7 @@ abstract class Repository {
   Future<Map> getHeaderForAuthUser() async {
     return {
       'Content-Type': 'application/json',
-      "USER_ID": (await User.getSavedUser()).id,
+      "User-Id": (await User.getSavedUser()).id,
     };
   }
 
