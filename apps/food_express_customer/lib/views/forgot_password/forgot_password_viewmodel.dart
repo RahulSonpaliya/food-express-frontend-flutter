@@ -49,9 +49,9 @@ class ForgotPasswordViewModel extends BaseViewModel {
 
   Map<String, String> _getRequestForSendOtp() {
     Map<String, String> request = {};
-    request['countryCode'] = _selectedCCode;
-    request['phoneNumber'] = mobile;
-    request['accountType'] = acTypeCustomer;
+    request['country_code'] = _selectedCCode;
+    request['phone_number'] = mobile;
+    request['account_type'] = acTypeCustomer;
     return request;
   }
 }
