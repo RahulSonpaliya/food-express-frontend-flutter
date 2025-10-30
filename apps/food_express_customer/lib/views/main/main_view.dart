@@ -4,6 +4,7 @@ import 'package:shared/colors.dart';
 import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../data/model/bean/order.dart';
 import '../../data/model/bean/user.dart';
 import 'cart/cart_view.dart';
 import 'home/home_view.dart';
@@ -118,32 +119,23 @@ class BottomNavBar extends ViewModelWidget<MainViewModel> {
       label: 'Notification',
     );
 
-    // TODO: implement
-    // var order = BottomNavigationBarItem(
-    //   icon: ValueListenableBuilder(
-    //     valueListenable: appOrderFromServer,
-    //     builder: (_, Order order, child) {
-    //       return appOrderFromServer.value != null
-    //           ? Badge(
-    //               toAnimate: true,
-    //               showBadge:
-    //                   appOrderFromServer.value.carts.length == 0 ? false : true,
-    //               animationType: BadgeAnimationType.fade,
-    //               badgeContent: Text(
-    //                 appOrderFromServer.value.carts.length.toString() ?? '  ',
-    //                 style: TSB.regularVSmall(textColor: Colors.white),
-    //               ),
-    //               child: Icon(Icons.shopping_cart),
-    //             )
-    //           : Icon(Icons.shopping_cart);
-    //     },
-    //   ),
-    //   activeIcon: Icon(Icons.shopping_cart_outlined),
-    //   label: 'Cart',
-    // );
-
     var order = BottomNavigationBarItem(
-      icon: Icon(Icons.shopping_cart),
+      icon: ValueListenableBuilder(
+        valueListenable: appOrderFromServer,
+        builder: (_, Order? order, child) {
+          return appOrderFromServer.value != null
+              ? Badge(
+                  isLabelVisible:
+                      appOrderFromServer.value?.carts.isNotEmpty ?? false,
+                  label: Text(
+                    appOrderFromServer.value?.carts.length.toString() ?? '  ',
+                    style: TSB.regularVSmall(textColor: Colors.white),
+                  ),
+                  child: Icon(Icons.shopping_cart),
+                )
+              : Icon(Icons.shopping_cart);
+        },
+      ),
       activeIcon: Icon(Icons.shopping_cart_outlined),
       label: 'Cart',
     );

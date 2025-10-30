@@ -30,6 +30,7 @@ class Product {
       price: parsedJson['price'],
       market_id: parsedJson['market_id'],
       description: parsedJson['description'],
+      qty: parsedJson['qty'],
     );
     if (parsedJson['product_option'] != null) {
       var optionsJsonArray = parsedJson['product_option'] as List;

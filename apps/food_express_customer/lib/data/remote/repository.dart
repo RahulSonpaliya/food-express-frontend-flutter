@@ -41,7 +41,7 @@ abstract class Repository {
     };
   }
 
-  updateHeader({bool reset = false}) async {
+  Future updateHeader({bool reset = false}) async {
     if (reset) {
       HEADER = {'Content-Type': 'application/json'};
     } else {
