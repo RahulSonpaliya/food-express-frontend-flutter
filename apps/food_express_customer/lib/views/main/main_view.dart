@@ -48,7 +48,7 @@ class _MainViewState extends State<MainView>
                         children: <Widget>[
                           HomeView(),
                           NotificationView(),
-                          CartView(),
+                          CartView(navigatedFromHome: true),
                           MoreView(),
                         ],
                       ),

@@ -14,6 +14,7 @@ import '../../../data/model/bean/product.dart';
 import '../../../data/model/bean/product_option.dart';
 import '../../../data/model/bean/user.dart';
 import '../../../data/remote/repository.dart';
+import '../cart/cart_view.dart';
 
 class ProductDetailViewModel extends BaseViewModel {
   final Product product;
@@ -59,9 +60,8 @@ class ProductDetailViewModel extends BaseViewModel {
   }
 
   navigateToAddToCart() {
-    // TODO implement CartView
-    // _navigationService.navigateWithTransition(CartView(),
-    //     transitionStyle: Transition.rightToLeft);
+    _navigationService.navigateWithTransition(CartView(),
+        transitionStyle: Transition.rightToLeft);
   }
 
   late Order order;
@@ -198,9 +198,8 @@ class ProductDetailViewModel extends BaseViewModel {
   }
 
   showViewCartBtn() {
-    // TODO implement CartView
-    // _navigationService.navigateWithTransition(CartView(),
-    //     transitionStyle: Transition.rightToLeft);
+    _navigationService.navigateWithTransition(CartView(),
+        transitionStyle: Transition.rightToLeft);
   }
 
   _updateCartTotal() {

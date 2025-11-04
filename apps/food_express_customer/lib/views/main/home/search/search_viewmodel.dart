@@ -10,6 +10,7 @@ import '../../../../data/model/bean/market.dart';
 import '../../../../data/model/bean/product.dart';
 import '../../../../data/remote/repository.dart';
 import '../../product_detail/product_detail_view.dart';
+import '../market_detail/market_detail_view.dart';
 
 class SearchViewModel extends BaseViewModel with UserAddressMixin {
   final List<Category> categoryList;
@@ -78,12 +79,11 @@ class SearchViewModel extends BaseViewModel with UserAddressMixin {
   }
 
   searchStoreItemClick(Market userProfileList) {
-    // TODO market detail view
-    // _navigationService.navigateWithTransition(
-    //     MarketDetailView(
-    //       market: userProfileList,
-    //       categoryList: categoryList,
-    //     ),
-    //     transition: NavigationTransition.RightToLeft);
+    _navigationService.navigateWithTransition(
+        MarketDetailView(
+          market: userProfileList,
+          categoryList: categoryList,
+        ),
+        transitionStyle: Transition.rightToLeft);
   }
 }
