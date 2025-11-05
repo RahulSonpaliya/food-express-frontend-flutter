@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_express_customer/app/locator.dart';
+import 'package:get/get.dart';
 import 'package:shared/colors.dart';
 import 'package:shared/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../data/model/bean/order.dart';
 import '../../data/model/bean/user.dart';
+import '../../data/remote/repository.dart';
 import 'cart/cart_view.dart';
 import 'home/home_view.dart';
 import 'main_viewmodel.dart';
@@ -17,6 +20,11 @@ class MainView extends StatefulWidget {
 
   @override
   _MainViewState createState() => _MainViewState();
+
+  static startMainScreen() async {
+    await locator<Repository>().updateHeader();
+    Get.offAll(MainView(), transition: Transition.rightToLeft);
+  }
 }
 
 class _MainViewState extends State<MainView>
