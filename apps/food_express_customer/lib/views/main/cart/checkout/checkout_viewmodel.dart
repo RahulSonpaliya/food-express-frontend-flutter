@@ -1,10 +1,15 @@
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:shared/common_utils.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../../app/locator.dart';
+import '../../../../data/model/bean/address.dart';
 import '../../../../data/model/bean/card.dart';
 import '../../../../data/model/bean/order.dart';
+import '../../../../data/model/bean/user_address.dart';
+import '../../../../data/remote/repository.dart';
 
 class CheckOutViewModel extends BaseViewModel {
   CheckOutViewModel() {
@@ -65,23 +70,21 @@ class CheckOutViewModel extends BaseViewModel {
     return req;
   }
 
-  // TODO implement
-  // AddressBean selectedAddress;
+  AddressBean? selectedAddress;
 
   _getDeliveryAddress() async {
-    // TODO implement
-    // appOrderFromServer.value?.deliveryFee = 0;
-    // _updateCartTotal();
-    // setBusyForObject(selectedAddress, true);
-    // var result = await locator<Repository>().getAddressList();
-    // setBusyForObject(selectedAddress, false);
-    // result.fold((failure) => showRetryDialog(failure: failure),
-    //     (addressResponse) {
-    //   selectedAddress = addressResponse.addressBeanList
-    //       .firstWhere((element) => element.isDefault, orElse: () => null);
-    //   notifyListeners();
-    //   if (selectedAddress != null) _getDeliverCharges();
-    // });
+    appOrderFromServer.value?.deliveryFee = 0;
+    _updateCartTotal();
+    setBusyForObject(selectedAddress, true);
+    var result = await locator<Repository>().getAddressList();
+    setBusyForObject(selectedAddress, false);
+    result.fold((failure) => showRetryDialog(failure: failure),
+        (addressResponse) {
+      selectedAddress = addressResponse.addressBeanList
+          .firstWhereOrNull((element) => element.isDefault);
+      notifyListeners();
+      if (selectedAddress != null) _getDeliverCharges();
+    });
   }
 
   _getDeliverCharges() async {

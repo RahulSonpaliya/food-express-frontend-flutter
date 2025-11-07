@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:food_express_customer/data/model/api_response/base_response.dart';
 
+import '../model/api_response/add_address_response.dart';
 import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
+import '../model/api_response/get_address_list_response.dart';
 import '../model/api_response/get_cart_response.dart';
 import '../model/api_response/login_response.dart';
 import '../model/api_response/market_detail_response.dart';
@@ -49,4 +51,13 @@ Future<AddCartResponse> parseAddCartResponse(String responseBody) async {
 
 Future<GetCartResponse> parseGetCartResponse(String responseBody) async {
   return GetCartResponse.fromJson(json.decode(responseBody));
+}
+
+Future<GetAddressListResponse> parseGetAddressListResponse(
+    String responseBody) async {
+  return GetAddressListResponse.fromJson(json.decode(responseBody));
+}
+
+Future<AddAddressResponse> parseAddAddressResponse(String responseBody) async {
+  return AddAddressResponse.fromJson(json.decode(responseBody));
 }

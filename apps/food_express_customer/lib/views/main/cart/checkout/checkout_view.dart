@@ -268,7 +268,7 @@ class CheckOutView extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    model.selectedAddress.addressNickName,
+                    model.selectedAddress?.addressNickName ?? "",
                     style: TSB.boldSmall(textColor: black_text_color),
                   ),
                 ),
@@ -283,7 +283,7 @@ class CheckOutView extends StatelessWidget {
                           right: SizeConfig.margin_padding_10,
                           top: SizeConfig.margin_padding_10),
                       child: Text(
-                        model.selectedAddress.address,
+                        model.selectedAddress?.address ?? "",
                         style: TSB.regularSmall(textColor: grey_sub_text_color),
                       ),
                     ),
