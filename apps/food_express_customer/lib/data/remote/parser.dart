@@ -7,6 +7,7 @@ import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/get_address_list_response.dart';
 import '../model/api_response/get_cart_response.dart';
+import '../model/api_response/get_delivery_charges_res.dart';
 import '../model/api_response/login_response.dart';
 import '../model/api_response/market_detail_response.dart';
 import '../model/api_response/nearby_markets_response.dart';
@@ -60,4 +61,9 @@ Future<GetAddressListResponse> parseGetAddressListResponse(
 
 Future<AddAddressResponse> parseAddAddressResponse(String responseBody) async {
   return AddAddressResponse.fromJson(json.decode(responseBody));
+}
+
+Future<GetDeliveryChargesRes> parseGetDeliveryChargesRes(
+    String responseBody) async {
+  return GetDeliveryChargesRes.fromJson(json.decode(responseBody));
 }

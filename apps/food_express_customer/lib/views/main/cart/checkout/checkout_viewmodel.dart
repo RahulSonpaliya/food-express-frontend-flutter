@@ -88,16 +88,16 @@ class CheckOutViewModel extends BaseViewModel {
   }
 
   _getDeliverCharges() async {
-    // TODO implement
-    // showLoading();
-    // var result = await locator<Repository>().getDeliveryCharges(
-    //     selectedAddress.addressId, appOrderFromServer.value?.market.id);
-    // await hideLoading();
-    // result.fold((failure) => showRetryDialog(failure: failure), (res) {
-    //   appOrderFromServer.value?.deliveryFee = res.deliveryCharge;
-    //   _updateCartTotal();
-    //   notifyListeners();
-    // });
+    showLoading();
+    var result = await locator<Repository>().getDeliveryCharges(
+        selectedAddress?.addressId ?? 0,
+        appOrderFromServer.value?.market.id ?? 0);
+    await hideLoading();
+    result.fold((failure) => showRetryDialog(failure: failure), (res) {
+      appOrderFromServer.value?.deliveryFee = res.deliveryCharge;
+      _updateCartTotal();
+      notifyListeners();
+    });
   }
 
   _updateCartTotal() {

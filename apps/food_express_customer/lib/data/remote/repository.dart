@@ -10,6 +10,7 @@ import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/get_address_list_response.dart';
 import '../model/api_response/get_cart_response.dart';
+import '../model/api_response/get_delivery_charges_res.dart';
 import '../model/api_response/login_response.dart';
 import '../model/api_response/market_detail_response.dart';
 import '../model/api_response/product_detail_response.dart';
@@ -34,6 +35,8 @@ const String GET_CART_URL = BASE_URL + "/cart/get";
 const String CLEAR_CART_URL = BASE_URL + "/cart/clear";
 const String GET_ADDRESS = BASE_URL + "/delivery_address/get";
 const String ADD_ADDRESS = BASE_URL + "/delivery_address/add";
+const String GET_DELIVERY_CHARGES =
+    BASE_URL + "/delivery_address/get-delivery-charges";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -95,6 +98,8 @@ abstract class Repository {
   Future<Either<Failure, GetAddressListResponse>> getAddressList();
   Future<Either<Failure, AddAddressResponse>> addAddress(
       {required Map<String, String> requestBody});
+  Future<Either<Failure, GetDeliveryChargesRes>> getDeliveryCharges(
+      num addressId, num marketId);
 }
 
 class Network extends Repository {
@@ -208,5 +213,14 @@ class Network extends Repository {
       {required Map<String, String> requestBody}) async {
     return await callPostAPI(ADD_ADDRESS, HEADER, parseAddAddressResponse,
         body: requestBody);
+  }
+
+  @override
+  Future<Either<Failure, GetDeliveryChargesRes>> getDeliveryCharges(
+      num addressId, num marketId) async {
+    return await callGetAPI(
+        '$GET_DELIVERY_CHARGES?address_id=$addressId&vendor_id=$marketId',
+        HEADER,
+        parseGetDeliveryChargesRes);
   }
 }
