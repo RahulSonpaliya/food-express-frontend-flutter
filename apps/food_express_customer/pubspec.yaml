@@ -46,6 +46,8 @@ dependencies:
   shimmer: ^3.0.0
   rxdart: ^0.28.0
   flutter_html: ^3.0.0
+  permission_handler: ^12.0.1
+  app_settings: ^6.1.1
   shared:
     path: ../../shared/shared
 

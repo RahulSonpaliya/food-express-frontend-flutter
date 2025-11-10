@@ -7,14 +7,15 @@ class GeocodingUtils {
     return locations[0];
   }
 
-  static Future<List<Placemark>> getPlacemarkFromCoordinates(
+  static Future<List<Placemark>?> getPlacemarkFromCoordinates(
           double lat, double lng) async =>
       await placemarkFromCoordinates(lat, lng);
 
   static Future<String?> getCompleteAddressFromCoordinates(
       double lat, double lng) async {
     try {
-      List<Placemark> placemarks = await getPlacemarkFromCoordinates(lat, lng);
+      List<Placemark> placemarks =
+          await getPlacemarkFromCoordinates(lat, lng) ?? [];
       debugPrint(
           'getCompleteAddressFromCoordinates --------> placemarks----> $placemarks');
 
