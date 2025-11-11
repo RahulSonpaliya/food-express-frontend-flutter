@@ -8,9 +8,9 @@ import '../../../../app/locator.dart';
 import '../../../../data/model/bean/address.dart';
 import '../../../../data/model/bean/card.dart';
 import '../../../../data/model/bean/order.dart';
-import '../../../../data/model/bean/user_address.dart';
 import '../../../../data/remote/repository.dart';
 import '../../more/address/new_my_address/my_address_new_view.dart';
+import '../payment_method/payment_method_view.dart';
 
 class CheckOutViewModel extends BaseViewModel {
   CheckOutViewModel() {
@@ -126,9 +126,8 @@ class CheckOutViewModel extends BaseViewModel {
   }
 
   addCardClick() async {
-    // TODO implement
-    // card = await _navigationService.navigateWithTransition(PaymentMethodView(),
-    //     transitionStyle: Transition.rightToLeft);
-    // notifyListeners();
+    card = await _navigationService.navigateWithTransition(PaymentMethodView(),
+        transitionStyle: Transition.rightToLeft);
+    notifyListeners();
   }
 }

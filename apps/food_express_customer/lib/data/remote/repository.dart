@@ -10,6 +10,7 @@ import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/edit_profile_response.dart';
 import '../model/api_response/get_address_list_response.dart';
+import '../model/api_response/get_card_response.dart';
 import '../model/api_response/get_cart_response.dart';
 import '../model/api_response/get_delivery_charges_res.dart';
 import '../model/api_response/login_response.dart';
@@ -41,6 +42,8 @@ const String GET_DELIVERY_CHARGES =
 const String DELETE_ADDRESS = BASE_URL + "/delivery_address/delete-address";
 const String SET_DEFAULT_ADDRESS =
     BASE_URL + "/delivery_address/set-default-address";
+const String GET_CARDS = BASE_URL + "/cards/get-card-list";
+const String DELETE_CARD = BASE_URL + "/cards/delete-card";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -108,6 +111,8 @@ abstract class Repository {
       {required num addressId});
   Future<Either<Failure, EditProfileResponse>> setDefaultAddress(
       {required num addressId});
+  Future<Either<Failure, GetCardResponse>> getCards();
+  Future<Either<Failure, BaseResponse>> deleteCard(String cardId);
 }
 
 class Network extends Repository {
@@ -247,5 +252,16 @@ class Network extends Repository {
       {required num addressId}) async {
     return await callPostAPI('$SET_DEFAULT_ADDRESS?address_id=$addressId',
         HEADER, parseEditProfileResponse);
+  }
+
+  @override
+  Future<Either<Failure, GetCardResponse>> getCards() async {
+    return await callGetAPI(GET_CARDS, HEADER, parseGetCardResponse);
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> deleteCard(String cardId) async {
+    return await callDeleteAPI(
+        '$DELETE_CARD?card_id=$cardId', HEADER, parseBaseResponse);
   }
 }

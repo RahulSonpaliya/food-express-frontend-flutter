@@ -7,6 +7,7 @@ import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
 import '../model/api_response/edit_profile_response.dart';
 import '../model/api_response/get_address_list_response.dart';
+import '../model/api_response/get_card_response.dart';
 import '../model/api_response/get_cart_response.dart';
 import '../model/api_response/get_delivery_charges_res.dart';
 import '../model/api_response/login_response.dart';
@@ -72,4 +73,8 @@ Future<GetDeliveryChargesRes> parseGetDeliveryChargesRes(
 Future<EditProfileResponse> parseEditProfileResponse(
     String responseBody) async {
   return EditProfileResponse.fromJson(json.decode(responseBody));
+}
+
+Future<GetCardResponse> parseGetCardResponse(String responseBody) async {
+  return GetCardResponse.fromJson(json.decode(responseBody));
 }
