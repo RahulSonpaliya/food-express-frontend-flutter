@@ -8,6 +8,7 @@ import 'package:shared/data/remote/failure.dart';
 import '../model/api_response/add_address_response.dart';
 import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
+import '../model/api_response/edit_profile_response.dart';
 import '../model/api_response/get_address_list_response.dart';
 import '../model/api_response/get_cart_response.dart';
 import '../model/api_response/get_delivery_charges_res.dart';
@@ -37,6 +38,9 @@ const String GET_ADDRESS = BASE_URL + "/delivery_address/get";
 const String ADD_ADDRESS = BASE_URL + "/delivery_address/add";
 const String GET_DELIVERY_CHARGES =
     BASE_URL + "/delivery_address/get-delivery-charges";
+const String DELETE_ADDRESS = BASE_URL + "/delivery_address/delete-address";
+const String SET_DEFAULT_ADDRESS =
+    BASE_URL + "/delivery_address/set-default-address";
 
 Map<String, String> HEADER = {'Content-Type': 'application/json'};
 
@@ -100,6 +104,10 @@ abstract class Repository {
       {required Map<String, String> requestBody});
   Future<Either<Failure, GetDeliveryChargesRes>> getDeliveryCharges(
       num addressId, num marketId);
+  Future<Either<Failure, EditProfileResponse>> deleteAddress(
+      {required num addressId});
+  Future<Either<Failure, EditProfileResponse>> setDefaultAddress(
+      {required num addressId});
 }
 
 class Network extends Repository {
@@ -222,5 +230,22 @@ class Network extends Repository {
         '$GET_DELIVERY_CHARGES?address_id=$addressId&vendor_id=$marketId',
         HEADER,
         parseGetDeliveryChargesRes);
+  }
+
+  @override
+  Future<Either<Failure, EditProfileResponse>> deleteAddress(
+      {required num addressId}) async {
+    return await callDeleteAPI(
+      '$DELETE_ADDRESS?address_id=$addressId',
+      HEADER,
+      parseEditProfileResponse,
+    );
+  }
+
+  @override
+  Future<Either<Failure, EditProfileResponse>> setDefaultAddress(
+      {required num addressId}) async {
+    return await callPostAPI('$SET_DEFAULT_ADDRESS?address_id=$addressId',
+        HEADER, parseEditProfileResponse);
   }
 }

@@ -5,6 +5,7 @@ import 'package:food_express_customer/data/model/api_response/base_response.dart
 import '../model/api_response/add_address_response.dart';
 import '../model/api_response/add_cart_response.dart';
 import '../model/api_response/all_category_response.dart';
+import '../model/api_response/edit_profile_response.dart';
 import '../model/api_response/get_address_list_response.dart';
 import '../model/api_response/get_cart_response.dart';
 import '../model/api_response/get_delivery_charges_res.dart';
@@ -66,4 +67,9 @@ Future<AddAddressResponse> parseAddAddressResponse(String responseBody) async {
 Future<GetDeliveryChargesRes> parseGetDeliveryChargesRes(
     String responseBody) async {
   return GetDeliveryChargesRes.fromJson(json.decode(responseBody));
+}
+
+Future<EditProfileResponse> parseEditProfileResponse(
+    String responseBody) async {
+  return EditProfileResponse.fromJson(json.decode(responseBody));
 }

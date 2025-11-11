@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Transition;
 import 'package:shared/common_utils.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -10,6 +10,7 @@ import '../../../../data/model/bean/card.dart';
 import '../../../../data/model/bean/order.dart';
 import '../../../../data/model/bean/user_address.dart';
 import '../../../../data/remote/repository.dart';
+import '../../more/address/new_my_address/my_address_new_view.dart';
 
 class CheckOutViewModel extends BaseViewModel {
   CheckOutViewModel() {
@@ -112,17 +113,16 @@ class CheckOutViewModel extends BaseViewModel {
   }
 
   navigateToMyAddress() async {
-    // TODO implement
-    // var add = await _navigationService.navigateWithTransition(
-    //     MyAddressNewView(
-    //       fromCheckOutScreen: true,
-    //     ),
-    //     transitionStyle: Transition.rightToLeft);
-    // if (add != null) {
-    //   selectedAddress = add;
-    //   notifyListeners();
-    //   _getDeliverCharges();
-    // }
+    var add = await _navigationService.navigateWithTransition(
+        MyAddressNewView(
+          fromCheckOutScreen: true,
+        ),
+        transitionStyle: Transition.rightToLeft);
+    if (add != null) {
+      selectedAddress = add;
+      notifyListeners();
+      _getDeliverCharges();
+    }
   }
 
   addCardClick() async {
